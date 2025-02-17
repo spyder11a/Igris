@@ -59,7 +59,10 @@ import {
     <WagmiProvider config={wagmiConfig}>
     <QueryClientProvider client={queryClient}>
       <SafeAreaView >
-       <ScrollView>
+       <ScrollView  
+       showsVerticalScrollIndicator={false} // Hides scroll bar
+       bounces={false} // Prevents overscroll on iOS
+       >
   <View style={styles.root} >
   <ImageBackground source={require("../assets/images/a.png")} style={styles.rectangle9} >
   <View style={styles.onboarding} testID="1260:2286">
@@ -104,11 +107,12 @@ Verified Reviews.`}
     <Text style={styles.byMetamask} testID="1260:2303">
       {`By Metamask`}
     </Text>
+    {/* <Link  href="/(home)">Home</Link> */}
   </View>
 </View>
 </View>
   
-  
+
   </ImageBackground>
 
      

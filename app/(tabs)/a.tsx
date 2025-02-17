@@ -1,7 +1,9 @@
 import { Image,View,Text, StyleSheet, Platform, ImageBackground } from 'react-native';
 import React from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
-const Home = () =>{
+import Svg, { Circle, Rect, Path } from 'react-native-svg';
+
+const a = () =>{
   return (
     <View style={styles.root} >
       <View style={styles.statusBarIPhone1313Pro} testID="1090:969">
@@ -11,13 +13,15 @@ const Home = () =>{
           <Text style={styles.helloKai} testID="1090:972">
             {`hello Kai,`}
           </Text>
-           <Image source={require("../assets/images/profile.png")} style={styles.profile} ></Image>
+           <Image source={require("../../assets/images/profile.png")} style={styles.profile} ></Image>
         </View>
         <View style={styles.frame38} testID="1090:977">
           <View style={styles.frame35} testID="1090:978">
             <View style={styles.frame89} testID="1090:979">
               <View style={styles.feSearch} testID="1090:980">
-                {/* <Vector/> */}
+              <Svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+  <Path fill-rule="evenodd" clip-rule="evenodd" d="M15.6661 13.7922L21.4568 19.5428C21.6603 19.7451 21.7746 20.0194 21.7745 20.3053C21.7744 20.5913 21.66 20.8655 21.4563 21.0676C21.2526 21.2697 20.9764 21.3832 20.6885 21.3831C20.4005 21.383 20.1244 21.2693 19.9209 21.0671L14.1302 15.3164C12.3991 16.6479 10.2223 17.2745 8.0425 17.0687C5.86275 16.8629 3.84381 15.8402 2.3964 14.2087C0.948992 12.5771 0.181838 10.4592 0.251006 8.28588C0.320173 6.11254 1.22046 4.047 2.76873 2.50945C4.317 0.971901 6.39694 0.0778427 8.58543 0.00915444C10.7739 -0.0595338 12.9066 0.702308 14.5495 2.1397C16.1925 3.57708 17.2223 5.58205 17.4295 7.74671C17.6367 9.91137 17.0058 12.0731 15.665 13.7922M8.85824 14.9691C10.571 14.9691 12.2136 14.2934 13.4248 13.0906C14.6359 11.8879 15.3163 10.2566 15.3163 8.55572C15.3163 6.8548 14.6359 5.22354 13.4248 4.02081C12.2136 2.81808 10.571 2.14239 8.85824 2.14239C7.14545 2.14239 5.50283 2.81808 4.29171 4.02081C3.08059 5.22354 2.40019 6.8548 2.40019 8.55572C2.40019 10.2566 3.08059 11.8879 4.29171 13.0906C5.50283 14.2934 7.14545 14.9691 8.85824 14.9691Z" fill="#8F8F8F"/>
+</Svg>
               </View>
               <View style={styles.group34} testID="1090:983">
                 <Text style={styles.search} testID="1090:984">
@@ -48,7 +52,7 @@ const Home = () =>{
           </Text>
         </View>
         
-        <ImageBackground source={require("../assets/images/b.png")} style={styles.frame892} testID="1090:993">
+        <ImageBackground source={require("../../assets/images/b.png")} style={styles.frame892} testID="1090:993">
         {/* <LinearGradient
         //   colors={['transparent', 'transparent']} // Gradient colors (from black to transparent)
           style={styles.gradient}
@@ -156,9 +160,9 @@ const styles = StyleSheet.create({
   },
   frame35: {
     height: 47.493,
-    paddingTop: 14.747,
-    paddingLeft: 13.867,
-    paddingBottom: 10.747,
+    paddingTop: 11.747,
+    paddingLeft: 14.867,
+    paddingBottom: 14.747,
     paddingRight: 13.867,
     flexDirection: 'column',
     alignItems: 'flex-start',
@@ -364,4 +368,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Home;
+export default a;

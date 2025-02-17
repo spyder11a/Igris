@@ -12,9 +12,9 @@ export default function RootLayout() {
           fontWeight: 'bold',
         },
       }}>
-      <Stack.Screen name="index" />
-      <Stack.Screen name="home" />
-      <Stack.Screen name="onboarding" />
+
+     
+      <Stack.Screen name="(tabs)" />
 
      
     </Stack>

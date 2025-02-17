@@ -8,7 +8,7 @@ export default function Index() {
   intro page
 </Text>
 <Link style={styles.container3} href="/onboarding">Onboard</Link>
-<Link style={styles.container3} href="/home">Home</Link>
+<Link style={styles.container3} href="/a">a</Link>
 
 </View>
   );
