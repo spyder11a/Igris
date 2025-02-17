@@ -7,7 +7,9 @@ export default function Index() {
 <Text>
   intro page
 </Text>
-<Link style={styles.container3} href="/Onboarding">View details</Link>
+<Link style={styles.container3} href="/onboarding">Onboard</Link>
+<Link style={styles.container3} href="/home">Home</Link>
+
 </View>
   );
 }

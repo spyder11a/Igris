@@ -1,4 +1,4 @@
-import { Image,SafeAreaView,View,Text,Pressable, StyleSheet, ScrollView, Platform } from 'react-native';
+import { Image,SafeAreaView,View,Text,Pressable, StyleSheet, ScrollView, Platform, ImageBackground } from 'react-native';
 
 import '@walletconnect/react-native-compat';
 import { Link } from 'expo-router';
@@ -61,52 +61,57 @@ import {
       <SafeAreaView >
        <ScrollView>
   <View style={styles.root} >
-    
-      <View style={styles.onboarding} testID="1260:2286">
+  <ImageBackground source={require("../assets/images/a.png")} style={styles.rectangle9} >
+  <View style={styles.onboarding} testID="1260:2286">
 
-        <View style={styles.frame92} testID="1260:2287">
-          <View style={styles.frame43} testID="1260:2288">
-            <View style={styles.group48} testID="1260:2289">
-              <View style={styles.frame91} testID="1260:2290">
-                <Text style={styles.joinUsNow} testID="1260:2291">
-                  {`Join us Now`}
-                </Text>
-                <Text style={styles.decentralizedTrustVerifiedReviews} testID="1260:2292">
-                  {` Decentralized Trust, 
+<View style={styles.frame92} testID="1260:2287">
+  <View style={styles.frame43} testID="1260:2288">
+    <View style={styles.group48} testID="1260:2289">
+      <View style={styles.frame91} testID="1260:2290">
+        <Text style={styles.joinUsNow} testID="1260:2291">
+          {`Join us Now`}
+        </Text>
+        <Text style={styles.decentralizedTrustVerifiedReviews} testID="1260:2292">
+          {` Decentralized Trust, 
 Verified Reviews.`}
-                </Text>
-                <Text style={styles.beAPartOfTheTransparentReviewRevolution} testID="1260:2293">
-                  {`"Be a Part of the Transparent Review Revolution!"`}
-                </Text>
-              </View>
-            </View>
-            <View style={styles.frame42} testID="1260:2294">
-              <View style={styles.frame80} testID="1260:2295">
-                <View style={styles.frame52} testID="1260:2296">
-                  <Text style={styles.user} testID="1260:2297">
-                    {`User`}
-                  </Text>
-                </View>
-                <View style={styles.frame50} testID="1260:2298">
-                  <Text style={styles.restaurant} testID="1260:2299">
-                    {`Restaurant`}
-                  </Text>
-                </View>
-              </View>
-            </View>
-          </View>
-          <View style={styles.frame90} testID="1260:2300">
-              <AppKit/>
-              <Pressable  style={styles.frame10} onPress={() => open()}>
-                            <Text  style={styles.connectWallet}>{}Open Connect Modal</Text>
-                      </Pressable>
-           
-            <Text style={styles.byMetamask} testID="1260:2303">
-              {`By Metamask`}
-            </Text>
-          </View>
+        </Text>
+        <Text style={styles.beAPartOfTheTransparentReviewRevolution} testID="1260:2293">
+          {`"Be a Part of the Transparent Review Revolution!"`}
+        </Text>
+      </View>
+    </View>
+    <View style={styles.frame42} testID="1260:2294">
+      <View style={styles.frame80} testID="1260:2295">
+        <View style={styles.frame52} testID="1260:2296">
+          <Text style={styles.user} testID="1260:2297">
+            {`User`}
+          </Text>
+        </View>
+        <View style={styles.frame50} testID="1260:2298">
+          <Text style={styles.restaurant} testID="1260:2299">
+            {`Restaurant`}
+          </Text>
         </View>
       </View>
+    </View>
+  </View>
+  <View style={styles.frame90} testID="1260:2300">
+      <AppKit/>
+      <Pressable  style={styles.frame10} onPress={() => open()}>
+                    <Text  style={styles.connectWallet}>{}Open Connect Modal</Text>
+              </Pressable>
+   
+    <Text style={styles.byMetamask} testID="1260:2303">
+      {`By Metamask`}
+    </Text>
+  </View>
+</View>
+</View>
+  
+  
+  </ImageBackground>
+
+     
     </View>
     </ScrollView>
     </SafeAreaView>
@@ -115,7 +120,10 @@ Verified Reviews.`}
   );
 }
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create({rectangle9: {
+   
+   
+  },
     root: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -166,7 +174,7 @@ const styles = StyleSheet.create({
         alignItems: 'flex-end',
         rowGap: 3.467,
         columnGap: 3.467,
-        backgroundColor: 'rgba(60, 60, 60, 1)',
+       
       },
       frame92: {
         flexDirection: 'column',
