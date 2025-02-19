@@ -7,11 +7,7 @@ export default function RootLayout() {
   return (
     <Stack
      initialRouteName="(tabs)"
-    
      backBehavior="history"
-     
-    
-      
       screenOptions={{
         headerStyle: {
           backgroundColor: '#f4511e',
@@ -21,16 +17,9 @@ export default function RootLayout() {
           fontWeight: 'bold',
         },
         headerShown: false, // Hide the header
-
-
-
-
       }}>
-
-     
+  
       <Stack.Screen name="(tabs)" />
-
-     
     </Stack>
   );
 }

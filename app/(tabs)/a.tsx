@@ -17,8 +17,6 @@ import { LinearGradient } from "expo-linear-gradient";
 import Svg, { Circle, Rect, Path } from "react-native-svg";
 import { useRouter } from 'expo-router';
 
-
-
 const handelHotal =() => {
         Alert.alert('Error', 'Both input fields are required');
 }

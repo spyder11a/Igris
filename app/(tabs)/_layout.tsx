@@ -19,7 +19,10 @@ export default function HomeLayout() {
     }}
     >
       <Tabs.Screen name="a"  />
-      <Tabs.Screen name="b"  />
+      <Tabs.Screen 
+      name="b"  
+      options={{ tabBarStyle: { display: 'none' } }} // Hides tab bar
+      />
       <Tabs.Screen name="c"  />
       <Tabs.Screen name="d"  />
     </Tabs>
