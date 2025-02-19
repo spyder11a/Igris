@@ -36,6 +36,7 @@
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#000000"
+          
         }
       ],
       "expo-video"

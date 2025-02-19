@@ -346,6 +346,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     alignSelf: "stretch",
+    
   },
   group46: {
     width: 238.983,
@@ -480,3 +481,7 @@ const styles = StyleSheet.create({
 });
 
 export default reels;
+
+
+
+// https://gateway.pinata.cloud/ipfs/QmbabLjL5TYJteMXUEfVwZTAuTToNFfgHfiCUJ6M1Kbbbw

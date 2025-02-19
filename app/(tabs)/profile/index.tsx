@@ -6,6 +6,7 @@ import Svg, { Circle, Rect, Path } from 'react-native-svg';
 const profile = () => {
   return (
     <ScrollView
+    style={{ backgroundColor: "rgba(14, 14, 14, 1)" }} 
     showsVerticalScrollIndicator={false} // Hides the vertical scrollbar
     >
  <View style={styles.root} >

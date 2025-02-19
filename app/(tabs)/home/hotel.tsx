@@ -15,7 +15,6 @@ export default function hotel() {
        <View style={styles.frame114} testID="1293:183">
               <TouchableOpacity onPress={() => router.back()}  style={styles.back}>
                 <Svg
-                 
                   width="9"
                   height="15"
                   viewBox="0 0 9 15"

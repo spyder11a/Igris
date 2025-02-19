@@ -25,6 +25,7 @@ export default function HomeLayout() {
       />
       <Tabs.Screen name="upload"  />
       <Tabs.Screen name="profile"  />
+      <Tabs.Screen name="e"  />
     </Tabs>
   );
 }

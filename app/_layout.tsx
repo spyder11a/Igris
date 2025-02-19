@@ -6,13 +6,16 @@ export default function RootLayout() {
 
   return (
     <Stack
+    
      initialRouteName="(tabs)"
-     backBehavior="history"
+    
       screenOptions={{
         headerStyle: {
           backgroundColor: '#f4511e',
         },
-        headerTintColor: '#fff',
+        animation: "none", // Correct way to disable animations in expo-router
+        contentStyle: { backgroundColor: "black" }, // Ensures proper background
+        headerTintColor: '#000000',
         headerTitleStyle: {
           fontWeight: 'bold',
         },
