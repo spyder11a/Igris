@@ -18,13 +18,13 @@ export default function HomeLayout() {
       },
     }}
     >
-      <Tabs.Screen name="a"  />
+      <Tabs.Screen name="home"  />
       <Tabs.Screen 
-      name="b"  
+      name="reels"  
       options={{ tabBarStyle: { display: 'none' } }} // Hides tab bar
       />
-      <Tabs.Screen name="c"  />
-      <Tabs.Screen name="d"  />
+      <Tabs.Screen name="upload"  />
+      <Tabs.Screen name="profile"  />
     </Tabs>
   );
 }
