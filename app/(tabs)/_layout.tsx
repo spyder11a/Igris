@@ -1,6 +1,9 @@
 import { Stack,Tabs } from 'expo-router';
+import { BookingProvider } from './context/BookingContext';
+
 export default function HomeLayout() {
   return (
+    <BookingProvider>
     <Tabs 
     screenOptions={{
       headerShown: false, // Hide header for tabs
@@ -26,6 +29,8 @@ export default function HomeLayout() {
       <Tabs.Screen name="upload"  />
       <Tabs.Screen name="profile"  />
       <Tabs.Screen name="e"  />
+      <Tabs.Screen name="f"  />
     </Tabs>
+    </BookingProvider>
   );
 }

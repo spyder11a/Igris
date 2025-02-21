@@ -15,74 +15,93 @@ import {
   ImageBackground,
   ActivityIndicator
 } from "react-native";
-import React, { useState,useEffect,useRef} from "react";
+import React, { useState,useContext,useEffect,useRef} from "react";
 import Svg, { Circle, Rect, Path } from "react-native-svg";
 import * as ImagePicker from "expo-image-picker";
 import { Video } from "expo-av"; // Import Video from expo-av
 import axios from "axios";
+import { BookingContext } from '../context/BookingContext';
+
 
 
 const upload = () => {
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [ipfsHash, setIpfsHash] = useState("");
-  
   const [tag, setTag] = useState(""); // Default text "Review"
   const [review, setReview] = useState(""); // Default text "Review"
   const [loading, setLoading] = useState(false);
+  const { addBooking } = useContext(BookingContext);
+  const [shared, setShared] = useState(false);
 
 
 
 
-
-  const shere = async () => {
-
-
-    if (!selectedVideo) {
-      Alert.alert("Error", "Select a Video");
-      return;
-    }
-    if (review.trim() == "" || tag.trim() == "") {
-      Alert.alert("Error", "Both input fields are required");
-      return;
-    }
-  
-
-    setLoading(true);
-    try {
-      const fileUri = selectedVideo.uri;
-      const fileName = fileUri.split("/").pop();
-
-      let formData = new FormData();
-      formData.append("file", {
-        uri: fileUri,
-        type: "video/mp4",
-        name: fileName,
-      });
-
-      const headers = {
-        "Content-Type": "multipart/form-data",
-        pinata_api_key: '0233035af3ed41ecf64e',
-        pinata_secret_api_key:'251c8891c0e1168b65b562fc326d520cf82213058e9466104e513cead2fdf98d',
+  const handleBooking = (ipfsHashValue) => {
+      const newBooking = {
+        ipfsHash: ipfsHashValue,
+        tag,
+        review,
+        id: Date.now(),
       };
+    
+      addBooking(newBooking);
+      Alert.alert("Success", "Booking added!");
+    };
+    
 
-      const response = await axios.post(
-        "https://api.pinata.cloud/pinning/pinFileToIPFS",
-        formData,
-        { headers }
-      );
-
-      setIpfsHash(response.data.IpfsHash);
-      console.log("File uploaded:", response.data);
-    } catch (error) {
-      console.error("Upload failed:", error);
-    }
-    setLoading(false);
-  };
-
-
-
-
-
+    const shere = async () => {
+      if (!selectedVideo) {
+        Alert.alert("Error", "Select a Video");
+        return;
+      }
+      if (review.trim() == "" || tag.trim() == "") {
+        Alert.alert("Error", "Both input fields are required");
+        return;
+      }
+    
+      setLoading(true);
+      try {
+        const fileUri = selectedVideo.uri;
+        const fileName = fileUri.split("/").pop();
+    
+        let formData = new FormData();
+        formData.append("file", {
+          uri: fileUri,
+          type: "video/mp4",
+          name: fileName,
+        });
+    
+        const headers = {
+          "Content-Type": "multipart/form-data",
+          pinata_api_key: "0233035af3ed41ecf64e",
+          pinata_secret_api_key: "251c8891c0e1168b65b562fc326d520cf82213058e9466104e513cead2fdf98d",
+        };
+    
+        const response = await axios.post(
+          "https://api.pinata.cloud/pinning/pinFileToIPFS",
+          formData,
+          { headers }
+        );
+    
+        const uploadedHash = response.data.IpfsHash;
+        console.log("File uploaded:", uploadedHash);
+    
+        // ✅ Wait for state to update, then add booking
+        setIpfsHash(uploadedHash);
+        
+        setTimeout(() => {
+          handleBooking(uploadedHash);
+        }, 100); // Slight delay to ensure state updates
+    
+        Alert.alert("Success", "Review added and Booking added!");
+      } catch (error) {
+        console.error("Upload failed:", error);
+      } finally {
+        setLoading(false);
+        setShared(true);
+      }
+    };
+    
 
   const pickVideo = async () => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -104,7 +123,6 @@ const upload = () => {
     }
   };
   
-
 
 
   const [keyboardVisible, setKeyboardVisible] = useState(false);
@@ -148,7 +166,9 @@ const upload = () => {
 >
       <View style={styles.root}>
         <View style={styles.frame22} testID="1269:3">
-          {/* <Vector/> */}
+            <Svg  width="9" height="16" viewBox="0 0 9 16" fill="none">
+           <Path d="M7.57319 1.47705L1.24316 7.80708L7.57319 14.1371" stroke="white" strokeWidth="2.11001" strokeLinecap="round" strokeLinejoin="round"/>
+         </Svg>
         </View>
         <View style={styles.frame101} testID="1269:5">
           <Text style={styles.newPost} testID="1269:6">
@@ -223,36 +243,32 @@ const upload = () => {
                   </View>
                 </View>
               </View>
-               {loading && <ActivityIndicator size="large" color="#00f" />}
-                        
-                              {/* Show IPFS Link */}
-                              {ipfsHash ? (
-                                <View style={styles.data} >
-                                  <Text style={styles.IPFS} >IPFS Hash: {ipfsHash}</Text>
-                                  <Text   style={styles.IPFS} >URL: https://gateway.pinata.cloud/ipfs/{ipfsHash}</Text>
-                                </View>
-                              ) : null}
-
-
-
-
+              
               <View style={styles.frame43} testID="1269:21">
 
 
 
-                <TouchableOpacity onPress={shere} style={styles.frame115} testID="1276:178">
-                  <View style={styles.frame114} testID="1276:177">
-                    <Svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                      <Path
-                        d="M5.16853 6.80239L5.16712 6.80379L5.16431 6.8059L5.15728 6.81153C5.12675 6.8347 5.09719 6.8591 5.06866 6.88468C4.99502 6.9499 4.92416 7.01818 4.85625 7.08935C4.68745 7.26729 4.47082 7.53175 4.26756 7.88553C3.85821 8.59941 3.51428 9.66356 3.7077 11.0864C3.8983 12.491 4.4884 13.6648 5.48573 14.4835C6.48025 15.2994 7.82644 15.7186 9.45466 15.7186C11.1335 15.7186 12.4741 15.0891 13.361 14.0095C14.2402 12.9397 14.6326 11.4803 14.5391 9.88511C14.4491 8.35465 13.6156 7.19344 12.8792 6.16798L12.6689 5.87469C11.8657 4.74091 11.232 3.69645 11.386 2.23492C11.3938 2.16136 11.386 2.08699 11.3632 2.01663C11.3404 1.94626 11.303 1.88149 11.2536 1.8265C11.2041 1.77152 11.1436 1.72756 11.076 1.69747C11.0084 1.66738 10.9353 1.65184 10.8613 1.65186C10.5927 1.65186 10.2846 1.73485 9.98779 1.86004C9.6441 2.0074 9.31978 2.19637 9.02211 2.42271C8.37152 2.91364 7.72094 3.65355 7.37419 4.64244C7.02815 5.62852 7.20398 6.56818 7.45719 7.25252C7.62388 7.70196 7.44312 8.14576 7.17093 8.27517C7.05511 8.32996 6.9226 8.33787 6.8011 8.29724C6.67959 8.2566 6.57849 8.17058 6.51894 8.05714L5.95205 6.98033C5.91657 6.91278 5.86685 6.85373 5.80634 6.80725C5.74582 6.76078 5.67594 6.72798 5.60152 6.71113C5.52711 6.69428 5.44992 6.69378 5.37528 6.70966C5.30065 6.72553 5.23035 6.75741 5.16923 6.80309"
-                        fill="black"
-                      />
-                    </Svg>
-                    <Text style={styles.share} testID="1269:24">
-                      {`Share`}
-                    </Text>
-                  </View>
-                </TouchableOpacity>
+              <TouchableOpacity onPress={shere} style={styles.frame115} testID="1276:178" disabled={loading}>
+<View style={styles.frame114} testID="1276:177">
+  {loading ? (
+  <ActivityIndicator size={18} color="#000000" />
+
+  ) : (
+    <>
+      <Svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+        <Path
+          d="M5.16853 6.80239L5.16712 6.80379L5.16431 6.8059L5.15728 6.81153C5.12675 6.8347 5.09719 6.8591 5.06866 6.88468C4.99502 6.9499 4.92416 7.01818 4.85625 7.08935C4.68745 7.26729 4.47082 7.53175 4.26756 7.88553C3.85821 8.59941 3.51428 9.66356 3.7077 11.0864C3.8983 12.491 4.4884 13.6648 5.48573 14.4835C6.48025 15.2994 7.82644 15.7186 9.45466 15.7186C11.1335 15.7186 12.4741 15.0891 13.361 14.0095C14.2402 12.9397 14.6326 11.4803 14.5391 9.88511C14.4491 8.35465 13.6156 7.19344 12.8792 6.16798L12.6689 5.87469C11.8657 4.74091 11.232 3.69645 11.386 2.23492C11.3938 2.16136 11.386 2.08699 11.3632 2.01663C11.3404 1.94626 11.303 1.88149 11.2536 1.8265C11.2041 1.77152 11.1436 1.72756 11.076 1.69747C11.0084 1.66738 10.9353 1.65184 10.8613 1.65186C10.5927 1.65186 10.2846 1.73485 9.98779 1.86004C9.6441 2.0074 9.31978 2.19637 9.02211 2.42271C8.37152 2.91364 7.72094 3.65355 7.37419 4.64244C7.02815 5.62852 7.20398 6.56818 7.45719 7.25252C7.62388 7.70196 7.44312 8.14576 7.17093 8.27517C7.05511 8.32996 6.9226 8.33787 6.8011 8.29724C6.67959 8.2566 6.57849 8.17058 6.51894 8.05714L5.95205 6.98033C5.91657 6.91278 5.86685 6.85373 5.80634 6.80725C5.74582 6.76078 5.67594 6.72798 5.60152 6.71113C5.52711 6.69428 5.44992 6.69378 5.37528 6.70966C5.30065 6.72553 5.23035 6.75741 5.16923 6.80309"
+          fill="black"
+        />
+      </Svg>
+      <Text style={styles.share} testID="1269:24">
+       Share
+      </Text>
+    </>
+  )}
+</View>
+</TouchableOpacity>
+
               </View>
             </View>
           </View>
@@ -306,7 +322,7 @@ const styles = StyleSheet.create({
     width: 390,
     paddingTop: 79.477,
     paddingLeft: 0,
-    paddingBottom: 100,
+    paddingBottom: 0,
     paddingRight: 0,
     flexDirection: "column",
     flexGrow:1,
@@ -501,14 +517,16 @@ const styles = StyleSheet.create({
     alignSelf: "stretch",
   },
   frame115: {
-    width: 97.06,
+    minWidth: 97.06,
     height: 50.64,
     paddingTop: 15,
     paddingLeft: 17,
     paddingBottom: 15,
     paddingRight: 17,
     flexDirection: "column",
-    alignItems: "flex-start",
+    alignItems: "flex-center",
+    justifyContent: "center",
+   
     rowGap: 10,
     columnGap: 10,
     borderBottomLeftRadius: 32.353,
@@ -518,10 +536,11 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(255, 255, 255, 1)",
   },
   frame114: {
-    flexDirection: "row",
-    alignItems: "center",
-    rowGap: 4,
-    columnGap: 4,
+      flexDirection: "row",
+      alignItems: "center", // Fix: "flex-center" is incorrect, use "center"
+      justifyContent: "center", // Ensures horizontal centering
+      rowGap: 4,
+      columnGap: 4,
   },
 });
 

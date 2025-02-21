@@ -20,34 +20,60 @@ import { Redirect, useRouter,Link } from "expo-router";
 
 const { width, height } = Dimensions.get("window");
 
+
+
+// https://v1.pinimg.com/videos/mc/expMp4/de/e5/99/dee599d5db25ccc357a28aa06428cd7a_t3.mp4
+
+// https://v1.pinimg.com/videos/mc/expMp4/df/d9/4c/dfd94cda812af97e67ed349ec73508a4_t3.mp4
+
+// https://v1.pinimg.com/videos/mc/expMp4/17/1a/3c/171a3c57fd78c9a06772f7234276598e_t3.mp4
+
+
+
 const REELS_DATA = [
   {
     id: "1",
+    
     videoUri:
       "https://v1.pinimg.com/videos/mc/expMp4/de/e5/99/dee599d5db25ccc357a28aa06428cd7a_t3.mp4", // Change to lowercase
-    user: "@user1",
-    description: "This is my first reel! #fun #expo",
+    avatar: "./assets/avatar1.jpg", // Change to lowercase
+    userName: "@user1",
+    address: "@user1",
     likes: 1234,
-    comments: 123,
+    rating:4.5,
+    description: "Steak tartare became popular in the 19th century in New York. It was originally made with hamburg steak because of the",
+    hotel:'white rabit',
+    location: 123,
   },
   {
     id: "2",
+    
     videoUri:
-      "https://v1.pinimg.com/videos/mc/expMp4/df/d9/4c/dfd94cda812af97e67ed349ec73508a4_t3.mp4",
-    user: "@user2",
-    description: "Check out this cool effect! #effects",
-    likes: 2345,
-    comments: 234,
+      "https://v1.pinimg.com/videos/mc/expMp4/df/d9/4c/dfd94cda812af97e67ed349ec73508a4_t3.mp4", // Change to lowercase
+    avatar: "./assets/avatar1.jpg", // Change to lowercase
+    userName: "@user1",
+    address: "@user1",
+    likes: 1234,
+    rating:4.5,
+    description: "Steak tartare became popular in the 19th century in New York. It was originally made with hamburg steak because of the",
+    hotel:'white rabit',
+    location: 123,
   },
   {
     id: "3",
+    
     videoUri:
-      "https://v1.pinimg.com/videos/mc/expMp4/17/1a/3c/171a3c57fd78c9a06772f7234276598e_t3.mp4",
-    user: "@user2",
-    description: "Check out this cool effect! #effects",
-    likes: 2345,
-    comments: 234,
+      "https://v1.pinimg.com/videos/mc/expMp4/de/e5/99/dee599d5db25ccc357a28aa06428cd7a_t3.mp4", // Change to lowercase
+    avatar: "./assets/avatar1.jpg", // Change to lowercase
+    userName: "@user1",
+    address: "@user1",
+    likes: 1234,
+    rating:4.5,
+    description: "Steak tartare became popular in the 19th century in New York. It was originally made with hamburg steak because of the",
+    hotel:'white rabit',
+    location: 123,
   },
+
 ];
 
 const ReelItem = ({ item, isInFocus }) => {
