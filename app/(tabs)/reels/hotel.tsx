@@ -9,10 +9,8 @@ import {
 } from "react-native";
 import Svg, { Circle, Rect, Path } from "react-native-svg";
 import { Redirect, useRouter, Link } from "expo-router";
-import { useHotelBooking } from "../context/useHotelBooking";
 export default function hotel() {
   const router = useRouter();
-  const { subscribeToPlatform } = useHotelBooking();
   return (
     <ScrollView
       showsVerticalScrollIndicator={false} // Hides the vertical scrollbar
@@ -102,7 +100,6 @@ export default function hotel() {
             </View>
             <TouchableOpacity
               style={styles.frame21}
-              onPress={subscribeToPlatform}
               testID="1256:2243"
             >
               <Text style={styles.bookNow} testID="1256:2244">

@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, Button, Alert, StyleSheet } from "react-native";
-import { useHotelReviews } from "./(tabs)/context/useHotelReviews"; // Import the hook we created
 
 export default function HotelReviewForm() {
-  const { submitReview } = useHotelReviews();
 
   const [hotelAddress, setHotelAddress] = useState("");
   const [reviewText, setReviewText] = useState("");
@@ -22,7 +20,7 @@ export default function HotelReviewForm() {
     }
     
     try {
-      await submitReview(hotelAddress, reviewText, ipfsHash, numericRating);
+      
     } catch (error) {
       Alert.alert("Error", "Failed to submit review");
     }
