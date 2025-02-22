@@ -1,71 +1,110 @@
-import { Image,SafeAreaView,View,Text,Pressable, StyleSheet, ScrollView, Platform, ImageBackground } from 'react-native';
-
+import { Image,View,Text,Pressable, StyleSheet, ScrollView, Platform, ImageBackground } from 'react-native';
+import React, { useEffect, useState } from 'react';
 import '@walletconnect/react-native-compat';
-import { Link } from 'expo-router';
-import React from 'react';
-import { WagmiProvider } from 'wagmi';
-import { mainnet, polygon, arbitrum } from '@wagmi/core/chains';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { AppKitButton } from '@reown/appkit-wagmi-react-native'
-import { useAppKit } from '@reown/appkit-wagmi-react-native'
+import { useAppKit, useAppKitAccount } from '@reown/appkit-ethers-react-native';
+import { createAppKit, defaultConfig, AppKit } from '@reown/appkit-ethers-react-native';
+import { useWalletInfo } from '@reown/appkit-ethers-react-native'
+import { useAppKitProvider } from '@reown/appkit-ethers-react-native'
+import { useRouter } from "expo-router"; 
 
-import { 
-    createAppKit, 
-    defaultWagmiConfig, 
-    AppKit 
-  } from '@reown/appkit-wagmi-react-native';
+
+
+
+// Configuration
+const projectId = '07068456ab114ff0730f70171b11d743';
+
+const metadata = {
+  name: 'AppKit RN',
+  description: 'AppKit RN Example',
+  url: 'https://reown.com/appkit',
+  icons: ['https://avatars.githubusercontent.com/u/179229932'],
+  redirect: {
+    native: 'YOUR_APP_SCHEME://' // Replace with your actual app scheme
+  }
+};
+
+// Chain configurations
+const chains = [
+  {
+    chainId: 1,
+    name: 'Ethereum',
+    currency: 'ETH',
+    explorerUrl: 'https://etherscan.io',
+    rpcUrl: 'https://cloudflare-eth.com'
+  },
+  {
+    chainId: 137,
+    name: 'Polygon',
+    currency: 'MATIC',
+    explorerUrl: 'https://polygonscan.com',
+    rpcUrl: 'https://polygon-rpc.com'
+  },
+ 
+  {
+    chainId: 5201420,  // Converted from hex (0x4f5e0c) to decimal
+    name: 'Electroneum Testnet',
+    currency: 'ETN',
+    explorerUrl: '', // Not provided in the image, you can add it if needed
+    rpcUrl: 'https://rpc.ankr.com/electroneum_testnet'
+}
+
+
   
-  // Initialize QueryClient
-  const queryClient = new QueryClient();
-  
-  // Project configuration
-  const projectId = '07068456ab114ff0730f70171b11d743'; // Replace with your actual project ID
-  
-  // Metadata configuration
-  const metadata = {
-    name: 'AppKit RN',
-    description: 'AppKit RN Example',
-    url: 'https://reown.com/appkit',
-    icons: ['https://avatars.githubusercontent.com/u/179229932'],
-    redirect: {
-      native: 'your-app-scheme://', // Replace with your app scheme
-      universal: 'your-app-universal-link.com' // Replace with your universal link
-    }
-  };
-  
-  // Chain configuration
-  const chains = [mainnet, polygon, arbitrum] as const;
-  
-  // Create Wagmi config
-  const wagmiConfig = defaultWagmiConfig({
-    chains,
-    projectId,
-    metadata
-  });
-  
-  // Initialize AppKit
-  createAppKit({
-    projectId,
-    wagmiConfig,
-    defaultChain: mainnet,
-    enableAnalytics: true
-  });
-  
+];
+
+// Initialize AppKit BEFORE the component
+const config = defaultConfig({ metadata });
+
+// Create AppKit instance immediately
+createAppKit({
+  projectId,
+  chains,
+  config,
+  enableAnalytics: true
+});
+
 
   const Onboarding = () =>{
-    const { open } = useAppKit()
+    const router = useRouter(); 
+  const [count, setCount] = useState(0);
+  const { open } = useAppKit();
+  const { address, chainId, isConnected,} = useAppKitAccount()
+  const { walletInfo } = useWalletInfo()
+  const { walletProvider } = useAppKitProvider()
+
+
+  useEffect(() => {
+  if(!isConnected){
+      console.log("Not connected!");
+      return;
+  }
+
+   if(isConnected){
+   
+  
+    }
+   
+
+   
     
+  }, [isConnected]);
+
+  
+  const handleConnect = async () => {
+    try {
+      await open();
+    } catch (error) {
+      console.error('Failed to open wallet connection:', error);
+    }
+
+  };
+
   return (
-    <WagmiProvider config={wagmiConfig}>
-    <QueryClientProvider client={queryClient}>
-      <SafeAreaView >
-       <ScrollView  
-       showsVerticalScrollIndicator={false} // Hides scroll bar
-       bounces={false} // Prevents overscroll on iOS
-       >
-  <View style={styles.root} >
-  <ImageBackground source={require("../assets/images/a.png")} style={styles.rectangle9} >
-  <View style={styles.onboarding} testID="1260:2286">
+   
+    
+<View style={styles.root} >
+<ImageBackground source={require("../assets/images/a.png")} style={styles.rectangle9} >
+<View style={styles.onboarding} testID="1260:2286">
 
 <View style={styles.frame92} testID="1260:2287">
   <View style={styles.frame43} testID="1260:2288">
@@ -76,7 +115,7 @@ import {
         </Text>
         <Text style={styles.decentralizedTrustVerifiedReviews} testID="1260:2292">
           {` Decentralized Trust, 
-Verified Reviews.`}
+            Verified Reviews.`}
         </Text>
         <Text style={styles.beAPartOfTheTransparentReviewRevolution} testID="1260:2293">
           {`"Be a Part of the Transparent Review Revolution!"`}
@@ -100,10 +139,10 @@ Verified Reviews.`}
   </View>
   <View style={styles.frame90} testID="1260:2300">
       <AppKit/>
-      <Pressable  style={styles.frame10} onPress={() => open()}>
-                    <Text  style={styles.connectWallet}>{}Open Connect Modal</Text>
-              </Pressable>
-   
+      <Pressable  style={styles.frame10} onPress={handleConnect}>
+          <Text  style={styles.connectWallet}>{}Open Connect Modal</Text>
+      </Pressable>
+
     <Text style={styles.byMetamask} testID="1260:2303">
       {`By Metamask`}
     </Text>
@@ -117,10 +156,9 @@ Verified Reviews.`}
 
      
     </View>
-    </ScrollView>
-    </SafeAreaView>
-      </QueryClientProvider>
-    </WagmiProvider>
+  
+  
+   
   );
 }
 
