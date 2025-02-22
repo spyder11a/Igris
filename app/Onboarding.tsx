@@ -11,7 +11,7 @@ import { useRouter } from "expo-router";
 
 
 // Configuration
-const projectId = '07068456ab114ff0730f70171b11d743';
+const projectId = '601f223af2ea9581e48d6141eef1ecab';
 
 const metadata = {
   name: 'AppKit RN',
@@ -19,7 +19,7 @@ const metadata = {
   url: 'https://reown.com/appkit',
   icons: ['https://avatars.githubusercontent.com/u/179229932'],
   redirect: {
-    native: 'YOUR_APP_SCHEME://' // Replace with your actual app scheme
+    native: 'my-app://' // Replace with your actual app scheme
   }
 };
 
@@ -91,14 +91,9 @@ createAppKit({
 
   
   const handleConnect = async () => {
-    try {
-      await open();
-    } catch (error) {
-      console.error('Failed to open wallet connection:', error);
-    }
-
+    await open(); // Open wallet connection modal
   };
-
+  
   return (
    
     

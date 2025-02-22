@@ -9,11 +9,10 @@ import {
 } from "react-native";
 import Svg, { Circle, Rect, Path } from "react-native-svg";
 import { Redirect, useRouter, Link } from "expo-router";
-import { book } from "../context/book";
-
+import { useHotelBooking } from "../context/useHotelBooking";
 export default function hotel() {
   const router = useRouter();
-  const { subscribeToPlatform } = book();
+  const { subscribeToPlatform } = useHotelBooking();
   return (
     <ScrollView
       showsVerticalScrollIndicator={false} // Hides the vertical scrollbar

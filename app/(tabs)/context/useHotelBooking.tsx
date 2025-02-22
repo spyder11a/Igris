@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import { View, Text, Button, StyleSheet, TextInput, Alert } from "react-native";
 import { BrowserProvider, parseEther, Contract } from "ethers";
 import { useAppKit, useAppKitAccount, useAppKitProvider } from "@reown/appkit-ethers-react-native";
-import HotelBookingABI from "./HotelBookingABI.json"; // Import the contract ABI
+import HotelBookingABI from "./useHotelBookingABI.json"; // Import the contract ABI
 
 // Replace with your deployed smart contract address
 const CONTRACT_ADDRESS = "0xe574C92e61579B3B77F5491a0C02C57157C915C1";
 
-export function book() {
+export function useHotelBooking() {
   const { open } = useAppKit(); // WalletConnect function
   const { walletProvider } = useAppKitProvider(); // Provider from AppKit
   const { address, isConnected } = useAppKitAccount(); // User wallet info
