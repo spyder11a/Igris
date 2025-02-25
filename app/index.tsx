@@ -9,11 +9,6 @@ export default function Index() {
 </Text>
 <Link style={styles.container3} href="/Onboarding">Onboard</Link>
 <Link style={styles.container3} href="/home">a</Link>
-<Link style={styles.container3} href="/dummy">dummy</Link>
-<Link style={styles.container3} href="/ntg">ntg</Link>
-
-
-
 </View>
   );
 }

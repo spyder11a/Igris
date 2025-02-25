@@ -1,99 +1,36 @@
 import { Image,View,Text,Pressable, StyleSheet, ScrollView, Platform, ImageBackground } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import '@walletconnect/react-native-compat';
-import { useAppKit, useAppKitAccount } from '@reown/appkit-ethers-react-native';
-import { createAppKit, defaultConfig, AppKit } from '@reown/appkit-ethers-react-native';
-import { useWalletInfo } from '@reown/appkit-ethers-react-native'
-import { useAppKitProvider } from '@reown/appkit-ethers-react-native'
-import { useRouter } from "expo-router"; 
-
-
-
-
-// Configuration
-const projectId = '601f223af2ea9581e48d6141eef1ecab';
-
-const metadata = {
-  name: 'AppKit RN',
-  description: 'AppKit RN Example',
-  url: 'https://reown.com/appkit',
-  icons: ['https://avatars.githubusercontent.com/u/179229932'],
-  redirect: {
-    native: 'my-app://' // Replace with your actual app scheme
-  }
-};
-
-// Chain configurations
-const chains = [
-  {
-    chainId: 1,
-    name: 'Ethereum',
-    currency: 'ETH',
-    explorerUrl: 'https://etherscan.io',
-    rpcUrl: 'https://cloudflare-eth.com'
-  },
-  {
-    chainId: 137,
-    name: 'Polygon',
-    currency: 'MATIC',
-    explorerUrl: 'https://polygonscan.com',
-    rpcUrl: 'https://polygon-rpc.com'
-  },
- 
-  {
-    chainId: 5201420,  // Converted from hex (0x4f5e0c) to decimal
-    name: 'Electroneum Testnet',
-    currency: 'ETN',
-    explorerUrl: '', // Not provided in the image, you can add it if needed
-    rpcUrl: 'https://rpc.ankr.com/electroneum_testnet'
-}
-
-
-  
-];
-
-// Initialize AppKit BEFORE the component
-const config = defaultConfig({ metadata });
-
-// Create AppKit instance immediately
-createAppKit({
-  projectId,
-  chains,
-  config,
-  enableAnalytics: true
-});
-
-
+import { useAppKit, useAppKitAccount, useAppKitProvider } from '@reown/appkit-ethers-react-native';
+import { useWalletStore } from '../components/walletStore';
   const Onboarding = () =>{
-    const router = useRouter(); 
-  const [count, setCount] = useState(0);
-  const { open } = useAppKit();
-  const { address, chainId, isConnected,} = useAppKitAccount()
-  const { walletInfo } = useWalletInfo()
-  const { walletProvider } = useAppKitProvider()
 
+    const { open } = useAppKit();
+  const { address, chainId, isConnected } = useAppKitAccount();
+  const { walletProvider } = useAppKitProvider();
+  const { setWalletProvider, setWalletInfo } = useWalletStore();
 
+  // Store wallet provider globally
   useEffect(() => {
-  if(!isConnected){
-      console.log("Not connected!");
-      return;
-  }
-
-   if(isConnected){
-   
-  
+    if (walletProvider) {
+      setWalletProvider(walletProvider);
     }
-   
+  }, [walletProvider]);
 
-   
-    
-  }, [isConnected]);
+  // Store wallet connection info globally
+  useEffect(() => {
+    setWalletInfo(address ?? null, chainId ?? null, isConnected);
+  }, [address, chainId, isConnected]);
 
-  
   const handleConnect = async () => {
     await open(); // Open wallet connection modal
   };
-  
+
+  console.log("Is Connected:", isConnected);
+  console.log("Address:", address);
+  console.log("Chain ID:", chainId);
+  console.log("Wallet Provider:", walletProvider);
+
   return (
    
     
@@ -133,7 +70,7 @@ createAppKit({
     </View>
   </View>
   <View style={styles.frame90} testID="1260:2300">
-      <AppKit/>
+     
       <Pressable  style={styles.frame10} onPress={handleConnect}>
           <Text  style={styles.connectWallet}>{}Open Connect Modal</Text>
       </Pressable>
