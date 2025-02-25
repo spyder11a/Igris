@@ -2,14 +2,13 @@ import React from "react";
 import { BrowserProvider, parseEther, Contract } from "ethers";
 import { useAppKit, useAppKitAccount, useAppKitProvider } from "@reown/appkit-ethers-react-native";
 import HotelBookingABI from "./ContractJson/HotelBookingABI.json"; // Import the contract ABI
+import { useWalletStore } from "../components/walletStore";
 
 // Replace with your deployed smart contract address
-const CONTRACT_ADDRESS = "0x4AF2E4E96AC0EE8CcA3Ba251716710624D1eB554";
+const CONTRACT_ADDRESS = "0xc300D8ca0FfFb77496F1249fCC0A7C745AB3ad64";
 
 export function useHotelBooking() {
-    const { open } = useAppKit();
-    const { walletProvider } = useAppKitProvider();
-    const { address, isConnected } = useAppKitAccount();
+    const { address, chainId, isConnected, walletProvider } = useWalletStore();
 
     async function getContract() {
         if (!walletProvider) {
@@ -69,8 +68,9 @@ export function useHotelBooking() {
                 console.error("❌ Unknown error occurred:", error);
             }
             throw error;
+
         }
     };
 
-    return { subscribeToPlatform, address, isConnected, open };
+    return { subscribeToPlatform, address, isConnected };
 }

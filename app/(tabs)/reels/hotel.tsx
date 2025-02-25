@@ -6,11 +6,37 @@ import {
   ScrollView,
   TouchableOpacity,
   Platform,
+  Alert,
+
 } from "react-native";
 import Svg, { Circle, Rect, Path } from "react-native-svg";
 import { Redirect, useRouter, Link } from "expo-router";
+import { useHotelBooking } from "../../../script/booking";
+import react , { useState } from 'react';
 export default function hotel() {
   const router = useRouter();
+  const { bookHotel } = useHotelBooking();
+  const [isLoading, setIsLoading] = useState(false);
+  
+  const handleBooking = async () => {
+   const hotelAddress = '0xb29e1ddDfc73E00dEE3EaA7EA102990ADca78b39'
+
+    setIsLoading(true);
+    try {
+        const txHash = await bookHotel(hotelAddress);
+        Alert.alert(
+            "Success",
+            `Booking completed!\nTransaction: ${txHash}`,
+        );
+    } catch (error) {
+        Alert.alert("Error", error.message || "Failed to book hotel");
+    } finally {
+        setIsLoading(false);
+    }
+};
+
+
+
   return (
     <ScrollView
       showsVerticalScrollIndicator={false} // Hides the vertical scrollbar
@@ -101,6 +127,7 @@ export default function hotel() {
             <TouchableOpacity
               style={styles.frame21}
               testID="1256:2243"
+              onPress={handleBooking}
             >
               <Text style={styles.bookNow} testID="1256:2244">
                 {`Book Now`}

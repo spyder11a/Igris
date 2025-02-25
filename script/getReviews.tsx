@@ -2,13 +2,12 @@ import React from "react";
 import { BrowserProvider, Contract } from "ethers";
 import { useAppKit, useAppKitAccount, useAppKitProvider } from "@reown/appkit-ethers-react-native";
 import SimpleHotelReviewABI from "./ContractJson/SimpleHotelReviewABI.json";
-
+import { useWalletStore } from "@/components/walletStore";
 const CONTRACT_ADDRESS = "0x95395BE9ACD6f8c208Fc8aFaF80ad72D9d40e1A6";
 
 export function useHotelReview() {
-  const { open } = useAppKit();
-  const { walletProvider } = useAppKitProvider();
-  const { address, isConnected } = useAppKitAccount();
+  const { address, chainId, isConnected, walletProvider } = useWalletStore();
+  
 
   async function getContract() {
     if (!walletProvider) {

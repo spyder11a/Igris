@@ -2,12 +2,12 @@ import React from "react";
 import { BrowserProvider, parseEther, Contract } from "ethers";
 import { useAppKit, useAppKitAccount, useAppKitProvider } from "@reown/appkit-ethers-react-native";
 import HotelBookingABI from "./ContractJson/HotelBookingABI.json";
+import { useWalletStore } from "@/components/walletStore";
 const CONTRACT_ADDRESS = "0x4AF2E4E96AC0EE8CcA3Ba251716710624D1eB554";
 
 export function useHotelBooking() {
-    const { open } = useAppKit();
-    const { walletProvider } = useAppKitProvider();
-    const { address, isConnected } = useAppKitAccount();
+    const { address, chainId, isConnected, walletProvider } = useWalletStore();
+
 
     async function getContract() {
         if (!walletProvider) {
@@ -70,6 +70,6 @@ export function useHotelBooking() {
         bookHotel,
         address,
         isConnected,
-        open
+      
     };
 }
