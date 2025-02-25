@@ -4,12 +4,12 @@ import { useAppKit, useAppKitAccount, useAppKitProvider } from "@reown/appkit-et
 import SimpleHotelReviewABI from "./ContractJson/SimpleHotelReviewABI.json";
 import { useWalletStore } from "@/components/walletStore";
 
-const CONTRACT_ADDRESS = "0x3FfaC2ACA2BAB2bB3781A5A2668D1b1241867e2E";
+const CONTRACT_ADDRESS = "0x4000Be6d42338c50C194b2a71E7e9f3e61Fb35EA";
 
 export function useHotelReview() {
-      const { address, chainId, isConnected, walletProvider } = useWalletStore();
   
-
+  const { address, chainId, isConnected, walletProvider } = useWalletStore();
+  
   async function getContract() {
     if (!walletProvider) {
       console.error("❌ No wallet provider available! Please connect your wallet.");
@@ -74,6 +74,6 @@ export function useHotelReview() {
     submitReview,
     address,
     isConnected,
-    
+   
   };
 }

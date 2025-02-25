@@ -21,17 +21,32 @@ import * as ImagePicker from "expo-image-picker";
 import { Video } from "expo-av"; // Import Video from expo-av
 import axios from "axios";
 import { BookingContext } from '../context/BookingContext';
+import { useHotelReview } from "../../../script/submitReview";
+
+
+
+
+
+
+
 
 
 
 const upload = () => {
+
+
+
+  const { submitReview } = useHotelReview();
+  
   const [selectedVideo, setSelectedVideo] = useState(null);
+  const [hotelAddress, setHotelAddress] = useState(""); // Default text "Review"
   const [ipfsHash, setIpfsHash] = useState("");
-  const [tag, setTag] = useState(""); // Default text "Review"
-  const [review, setReview] = useState(""); // Default text "Review"
+  const [review, setReview] = useState("");
+  const [rating, setRating] = useState(3);
   const [loading, setLoading] = useState(false);
   const { addBooking } = useContext(BookingContext);
-  const [shared, setShared] = useState(false);
+
+  
 
 
 
@@ -39,7 +54,7 @@ const upload = () => {
   const handleBooking = (ipfsHashValue) => {
       const newBooking = {
         ipfsHash: ipfsHashValue,
-        tag,
+        hotelAddress,
         review,
         id: Date.now(),
       };
@@ -47,14 +62,15 @@ const upload = () => {
       addBooking(newBooking);
       Alert.alert("Success", "Booking added!");
     };
-    
+  
 
-    const shere = async () => {
+const shere = async () => {
+
       if (!selectedVideo) {
         Alert.alert("Error", "Select a Video");
         return;
       }
-      if (review.trim() == "" || tag.trim() == "") {
+      if (review.trim() == "" || hotelAddress.trim() == "") {
         Alert.alert("Error", "Both input fields are required");
         return;
       }
@@ -82,23 +98,37 @@ const upload = () => {
           formData,
           { headers }
         );
-    
         const uploadedHash = response.data.IpfsHash;
         console.log("File uploaded:", uploadedHash);
-    
+
+
+
+        
+      
+
+        try {
+
+          const txHash = await submitReview(hotelAddress, review, uploadedHash, rating );
+          if (txHash === undefined){
+            return;
+          }
+          
+        } catch (error) {
+          const errorMessage = error instanceof Error ? error.message : String(error);
+          Alert.alert("Error", "Failed to submit review: " + errorMessage);
+          console.log("❌ Review submission failed:", errorMessage);
+          return;
+        }
+
         // ✅ Wait for state to update, then add booking
         setIpfsHash(uploadedHash);
+        handleBooking(uploadedHash);
         
-        setTimeout(() => {
-          handleBooking(uploadedHash);
-        }, 100); // Slight delay to ensure state updates
-    
-        Alert.alert("Success", "Review added and Booking added!");
       } catch (error) {
         console.error("Upload failed:", error);
       } finally {
         setLoading(false);
-        setShared(true);
+       
       }
     };
     
@@ -205,9 +235,9 @@ const upload = () => {
                 <View style={styles.frame792} testID="1269:14">
                 <TextInput
                       style={[styles.input,{
-                      color: tag === "" ? "#888" : "#fff" }]} // Change text color
-                      onChangeText={setTag}
-                      placeholder="Tag"
+                      color: hotelAddress === "" ? "#888" : "#fff" }]} // Change text color
+                      onChangeText={setHotelAddress}
+                      placeholder="hotelAddress"
                       placeholderTextColor="#888"
                       selectionColor="#fff" // Cursor color
                     />
@@ -420,7 +450,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 51.302,
     backgroundColor: "rgba(217, 217, 217, 0.05098039284348488)",
   },
-  tag: {
+  hotelAddress: {
     width: 332.854,
     alignSelf: "stretch",
     color: "rgba(255, 255, 255, 0.4000000059604645)",

@@ -43,10 +43,6 @@ const Onboarding = () => {
     await open(); // Open wallet connection modal
   };
 
-  console.log("Is Connected:", isConnected);
-  console.log("Address:", address);
-  console.log("Chain ID:", chainId);
-  console.log("Wallet Provider:", walletProvider);
 
   //selecter
 
