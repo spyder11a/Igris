@@ -18,7 +18,7 @@ import Svg, { Circle, Rect, Path } from "react-native-svg";
 import { useRouter } from 'expo-router';
 
 const handelHotal =() => {
-        Alert.alert('Error', 'Both input fields are required');
+    Alert.alert('Error', 'Both input fields are required');
 }
 const home = () => {
   const router = useRouter();
@@ -86,7 +86,7 @@ const home = () => {
         </View>
 
         <ImageBackground
-          source={require("../../../assets/images/b.png")}
+          source={require("../../../assets/images/c.png")}
           style={styles.frame892}
           testID="1090:993"
         >

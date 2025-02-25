@@ -14,44 +14,36 @@ import {
   Platform,
   ImageBackground,
   ActivityIndicator,
-  Button
+  Button,
 } from "react-native";
-import React, { useState,useContext,useEffect,useRef} from "react";
+import React, { useState, useContext, useEffect, useRef } from "react";
 import Svg, { Circle, Rect, Path } from "react-native-svg";
 import * as ImagePicker from "expo-image-picker";
 import { Video } from "expo-av"; // Import Video from expo-av
 import axios from "axios";
-import { BookingContext } from './context/BookingContext';
+import { BookingContext } from "./context/BookingContext";
 
-
-
-
-
-
-const e = () => {
-
+const notification = () => {
   const { bookings } = useContext(BookingContext);
   const { resetBookings } = useContext(BookingContext);
 
-
-
-
-
-
   return (
-
-     <ScrollView 
+    <ScrollView
       style={{ backgroundColor: "rgba(14, 14, 14, 1)" }}
-               keyboardShouldPersistTaps="handled"
+      keyboardShouldPersistTaps="handled"
       showsVerticalScrollIndicator={false} // Hides the vertical scrollbar
-      
-       
->
+    >
       <View style={styles.root}>
         <View style={styles.frame22} testID="1269:3">
-        <Svg  width="9" height="16" viewBox="0 0 9 16" fill="none">
-  <Path d="M7.57319 1.47705L1.24316 7.80708L7.57319 14.1371" stroke="white" strokeWidth="2.11001" strokeLinecap="round" strokeLinejoin="round"/>
-</Svg>
+          <Svg width="9" height="16" viewBox="0 0 9 16" fill="none">
+            <Path
+              d="M7.57319 1.47705L1.24316 7.80708L7.57319 14.1371"
+              stroke="white"
+              strokeWidth="2.11001"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </Svg>
         </View>
         <View style={styles.frame101} testID="1269:5">
           <Text style={styles.newPost} testID="1269:6">
@@ -59,161 +51,138 @@ const e = () => {
           </Text>
         </View>
 
-
-
         <View style={styles.frame102}>
           {/* notifiacrions */}
           {bookings.length === 0 ? (
-       <View></View>
-      ) : (
-        [...bookings].reverse().map((data) => (
-          <View style={styles.frame129} testID="1348:220">
-          <View style={styles.frame132} testID="1348:221">
-            <View style={styles.frame120} testID="1348:222">
-              <View style={styles.frame117} testID="1348:223">
-                <Text style={styles.posted} testID="1348:224">
-                  {`Posted!!!`}
+            <></>
+          ) : (
+            [...bookings].reverse().map((data) => (
+              <View style={styles.frame129} testID="1348:220">
+                <View style={styles.frame132} testID="1348:221">
+                  <View style={styles.frame120} testID="1348:222">
+                    <View style={styles.frame117} testID="1348:223">
+                      <Text style={styles.posted} testID="1348:224">
+                        {`Posted!!!`}
+                      </Text>
+                      <Text
+                        style={
+                          styles.stephanieMarinkovicPostedANewRecipeWhiskeySour
+                        }
+                        testID="1348:225"
+                      >
+                        {data.review}
+                      </Text>
+                    </View>
+                  </View>
+                  <View style={styles.frame121} testID="1348:226">
+                    <View style={styles.frame1172} testID="1348:227">
+                      <Text
+                        style={
+                          styles.ipfsQmZ4TDuvesekSs4QM5ZbKpXiZGun7S2CYtEzrb3DyXkjGx
+                        }
+                        testID="1348:228"
+                      >
+                        IPfS:{data.ipfsHash}
+                      </Text>
+                    </View>
+                  </View>
+                </View>
+                <View style={styles.frame118} testID="1348:229">
+                  <Text style={styles.now} testID="1348:230">
+                    {`now`}
+                  </Text>
+                  <View style={styles.frame131} testID="1348:231"></View>
+                </View>
+              </View>
+            ))
+          )}
+
+          <View style={styles.frame130} testID="1348:219">
+            <View style={styles.frame129} testID="1348:220">
+              <View style={styles.frame132} testID="1348:221">
+                <View style={styles.frame120} testID="1348:222">
+                  <View style={styles.frame117} testID="1348:223">
+                    <Text style={styles.posted} testID="1348:224">
+                      {`Posted!!!`}
+                    </Text>
+                    <Text
+                      style={
+                        styles.stephanieMarinkovicPostedANewRecipeWhiskeySour
+                      }
+                      testID="1348:225"
+                    >
+                      {`Stephanie Marinkovic posted a new recipe: Whiskey Sour `}
+                    </Text>
+                  </View>
+                </View>
+                <View style={styles.frame121} testID="1348:226">
+                  <View style={styles.frame1172} testID="1348:227">
+                    <Text
+                      style={
+                        styles.ipfsQmZ4TDuvesekSs4QM5ZbKpXiZGun7S2CYtEzrb3DyXkjGx
+                      }
+                      testID="1348:228"
+                    >
+                      {`IPFS:QmZ4tDuvesekSs4qM5ZBKpXiZGun7S2CYtEZRB3DYXkjGx`}
+                    </Text>
+                  </View>
+                </View>
+              </View>
+              <View style={styles.frame118} testID="1348:229">
+                <Text style={styles.now} testID="1348:230">
+                  {`now`}
                 </Text>
-                <Text style={styles.stephanieMarinkovicPostedANewRecipeWhiskeySour} testID="1348:225">
-                {data.review}
-                </Text>
+                <View style={styles.frame131} testID="1348:231"></View>
               </View>
             </View>
-            <View style={styles.frame121} testID="1348:226">
-              <View style={styles.frame1172} testID="1348:227">
-                <Text style={styles.ipfsQmZ4TDuvesekSs4QM5ZbKpXiZGun7S2CYtEzrb3DyXkjGx} testID="1348:228">
-                  IPfS:{data.ipfsHash}
-                </Text>
+            <View style={styles.frame133} testID="1349:242">
+              <View style={styles.frame1322} testID="1349:243">
+                <View style={styles.frame1202} testID="1349:244">
+                  <View style={styles.frame1173} testID="1349:245">
+                    <Text style={styles.booked} testID="1349:246">
+                      {`Booked!!!`}
+                    </Text>
+                    <Text
+                      style={
+                        styles.hash0X4A293A86Cba66C1C1971C350Af5C4A0C31Fa5Eda730Ec70660C5D4C5343D1271
+                      }
+                      testID="1349:247"
+                    >
+                      {`hash:0x4a293a86cba66c1c1971c350af5c4a0c31fa5eda730ec70660c5d4c5343d1271`}
+                    </Text>
+                  </View>
+                </View>
               </View>
-            </View>
-          </View>
-          <View style={styles.frame118} testID="1348:229">
-            <Text style={styles.now} testID="1348:230">
-              {`now`}
-            </Text>
-            <View style={styles.frame131} testID="1348:231">
+              <View style={styles.frame1182} testID="1349:248">
+                <Text style={styles.now2} testID="1349:249">
+                  {`now`}
+                </Text>
+                <View style={styles.frame1312} testID="1349:250"></View>
+              </View>
             </View>
           </View>
         </View>
-         
-        ))
-      )}
-
-
-
-
-
-
-        <View style={styles.frame130} testID="1348:219">
-          <View style={styles.frame129} testID="1348:220">
-            <View style={styles.frame132} testID="1348:221">
-              <View style={styles.frame120} testID="1348:222">
-                <View style={styles.frame117} testID="1348:223">
-                  <Text style={styles.posted} testID="1348:224">
-                    {`Posted!!!`}
-                  </Text>
-                  <Text style={styles.stephanieMarinkovicPostedANewRecipeWhiskeySour} testID="1348:225">
-                    {`Stephanie Marinkovic posted a new recipe: Whiskey Sour `}
-                  </Text>
-                </View>
-              </View>
-              <View style={styles.frame121} testID="1348:226">
-                <View style={styles.frame1172} testID="1348:227">
-                  <Text style={styles.ipfsQmZ4TDuvesekSs4QM5ZbKpXiZGun7S2CYtEzrb3DyXkjGx} testID="1348:228">
-                    {`IPFS:QmZ4tDuvesekSs4qM5ZBKpXiZGun7S2CYtEZRB3DYXkjGx`}
-                  </Text>
-                </View>
-              </View>
-            </View>
-            <View style={styles.frame118} testID="1348:229">
-              <Text style={styles.now} testID="1348:230">
-                {`now`}
-              </Text>
-              <View style={styles.frame131} testID="1348:231">
-              </View>
-            </View>
-          </View>
-          <View style={styles.frame133} testID="1349:242">
-            <View style={styles.frame1322} testID="1349:243">
-              <View style={styles.frame1202} testID="1349:244">
-                <View style={styles.frame1173} testID="1349:245">
-                  <Text style={styles.booked} testID="1349:246">
-                    {`Booked!!!`}
-                  </Text>
-                  <Text style={styles.hash0X4A293A86Cba66C1C1971C350Af5C4A0C31Fa5Eda730Ec70660C5D4C5343D1271} testID="1349:247">
-                    {`hash:0x4a293a86cba66c1c1971c350af5c4a0c31fa5eda730ec70660c5d4c5343d1271`}
-                  </Text>
-                </View>
-              </View>
-            </View>
-            <View style={styles.frame1182} testID="1349:248">
-              <Text style={styles.now2} testID="1349:249">
-                {`now`}
-              </Text>
-              <View style={styles.frame1312} testID="1349:250">
-              </View>
-            </View>
-          </View>
-
-
-
-      
-
-
-
-
-
-
-        </View>
-
-
-
-
-    
-
+        <Button title="Reset Bookings" onPress={resetBookings} />
       </View>
-      <Button title="Reset Bookings" onPress={resetBookings} />
-
-
-
-
-
-
-    
-
-
-
-
-
-
-
-
-        
-      
-        </View>
-     
     </ScrollView>
-   
   );
 };
 
 const styles = StyleSheet.create({
-  data:{
-    paddingLeft:22,
-    paddingRight:22,
-  
-    gap:10
-  },
-  IPFS:{
-  
-    alignSelf: 'stretch',
-    color: 'rgba(255, 255, 255, 0.6000000238418579)',
-    fontFamily: 'Inter',
-    fontSize: 14.77,
-    fontStyle: 'normal',
-    fontWeight: '500',
-    lineHeight: 18.99,
+  data: {
+    paddingLeft: 22,
+    paddingRight: 22,
 
+    gap: 10,
+  },
+  IPFS: {
+    alignSelf: "stretch",
+    color: "rgba(255, 255, 255, 0.6000000238418579)",
+    fontFamily: "Inter",
+    fontSize: 14.77,
+    fontStyle: "normal",
+    fontWeight: "500",
+    lineHeight: 18.99,
   },
   video: {
     flexDirection: "row",
@@ -242,7 +211,7 @@ const styles = StyleSheet.create({
     paddingBottom: 100,
     paddingRight: 0,
     flexDirection: "column",
-    flexGrow:1,
+    flexGrow: 1,
     alignItems: "flex-start",
     rowGap: 33.408,
     columnGap: 33.408,
@@ -377,9 +346,8 @@ const styles = StyleSheet.create({
     borderColor: "rgba(24, 24, 24, 1)",
   },
 
-  input:
-  {
-    width:350,
+  input: {
+    width: 350,
     flexGrow: 1,
     flexShrink: 0,
     flexBasis: 0,
@@ -397,7 +365,7 @@ const styles = StyleSheet.create({
       flexShrink: 0,
       flexBasis: 0,
       alignSelf: "stretch",
-      backgroundColor: '#00ff00',
+      backgroundColor: "#00ff00",
       fontFamily: "Inter",
       fontSize: 14.77,
       fontStyle: "normal",
@@ -457,31 +425,23 @@ const styles = StyleSheet.create({
     columnGap: 4,
   },
 
-
-
-
-
-
-
-
-
   posted: {
-    alignSelf: 'stretch',
-    color: 'rgba(255, 255, 255, 1)',
-    fontFamily: 'Inter',
+    alignSelf: "stretch",
+    color: "rgba(255, 255, 255, 1)",
+    fontFamily: "Inter",
     fontSize: 13.867,
-    fontStyle: 'normal',
-    fontWeight: '700',
+    fontStyle: "normal",
+    fontWeight: "700",
     letterSpacing: 0.139,
   },
   stephanieMarinkovicPostedANewRecipeWhiskeySour: {
-    alignSelf: 'stretch',
-    width:245,
-    color: 'rgba(255, 255, 255, 0.501960813999176)',
-    fontFamily: 'Inter',
+    alignSelf: "stretch",
+    width: 245,
+    color: "rgba(255, 255, 255, 0.501960813999176)",
+    fontFamily: "Inter",
     fontSize: 13.867,
-    fontStyle: 'normal',
-    fontWeight: '500',
+    fontStyle: "normal",
+    fontWeight: "500",
     lineHeight: 18.72,
     letterSpacing: 0.208,
   },
@@ -490,37 +450,37 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     paddingBottom: 0,
     paddingRight: 20,
-    flexDirection: 'column',
-    alignItems: 'center',
+    flexDirection: "column",
+    alignItems: "center",
     rowGap: 37.98,
     columnGap: 37.98,
-    alignSelf: 'stretch',
+    alignSelf: "stretch",
   },
   frame130: {
-    flexDirection: 'column',
-    alignItems: 'flex-start',
+    flexDirection: "column",
+    alignItems: "flex-start",
     rowGap: 9.013,
     columnGap: 9.013,
-    alignSelf: 'stretch',
+    alignSelf: "stretch",
   },
   frame129: {
-    flexDirection: 'row',
+    flexDirection: "row",
     paddingTop: 10.053,
     paddingLeft: 10.747,
     paddingBottom: 10.053,
     paddingRight: 10.747,
-    justifyContent: 'space-between',
-    alignItems: 'flex-start',
-    alignSelf: 'stretch',
+    justifyContent: "space-between",
+    alignItems: "flex-start",
+    alignSelf: "stretch",
     borderBottomLeftRadius: 12.133,
     borderBottomRightRadius: 12.133,
     borderTopLeftRadius: 12.133,
     borderTopRightRadius: 12.133,
-    backgroundColor: 'rgba(24, 24, 24, 1)',
+    backgroundColor: "rgba(24, 24, 24, 1)",
   },
   frame132: {
-    flexDirection: 'column',
-    alignItems: 'flex-start',
+    flexDirection: "column",
+    alignItems: "flex-start",
     rowGap: 15,
     columnGap: 15,
     flexGrow: 1,
@@ -528,14 +488,14 @@ const styles = StyleSheet.create({
     flexBasis: 0,
   },
   frame120: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    alignSelf: 'stretch',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    alignSelf: "stretch",
   },
   frame117: {
-    flexDirection: 'column',
-    alignItems: 'flex-start',
+    flexDirection: "column",
+    alignItems: "flex-start",
     rowGap: 4.16,
     columnGap: 4.16,
     flexGrow: 1,
@@ -543,25 +503,25 @@ const styles = StyleSheet.create({
     flexBasis: 0,
   },
   ipfsQmZ4TDuvesekSs4QM5ZbKpXiZGun7S2CYtEzrb3DyXkjGx: {
-    alignSelf: 'stretch',
-    color: 'rgba(255, 255, 255, 0.800000011920929)',
-    fontFamily: 'Inter',
+    alignSelf: "stretch",
+    color: "rgba(255, 255, 255, 0.800000011920929)",
+    fontFamily: "Inter",
     fontSize: 11.787,
-    fontStyle: 'normal',
-    fontWeight: '500',
+    fontStyle: "normal",
+    fontWeight: "500",
     lineHeight: 18.72,
     letterSpacing: 0.177,
   },
   frame121: {
-    flexDirection: 'row',
+    flexDirection: "row",
     width: 242,
-    alignItems: 'center',
+    alignItems: "center",
     rowGap: 40.56,
     columnGap: 40.56,
   },
   frame1172: {
-    flexDirection: 'column',
-    alignItems: 'flex-start',
+    flexDirection: "column",
+    alignItems: "flex-start",
     rowGap: 4.16,
     columnGap: 4.16,
     flexGrow: 1,
@@ -569,28 +529,28 @@ const styles = StyleSheet.create({
     flexBasis: 0,
   },
   now: {
-    alignSelf: 'stretch',
-    color: 'rgba(255, 255, 255, 0.501960813999176)',
-    textAlign: 'right',
-    fontFamily: 'Inter',
+    alignSelf: "stretch",
+    color: "rgba(255, 255, 255, 0.501960813999176)",
+    textAlign: "right",
+    fontFamily: "Inter",
     fontSize: 12.48,
-    fontStyle: 'normal',
-    fontWeight: '500',
+    fontStyle: "normal",
+    fontWeight: "500",
     lineHeight: 15.98,
     letterSpacing: 0.187,
   },
   frame118: {
     width: 35.36,
     height: 58.987,
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "column",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   frame131: {
-    flexDirection: 'row',
+    flexDirection: "row",
     width: 35.36,
     height: 35.707,
-    alignItems: 'center',
+    alignItems: "center",
     rowGap: 10,
     columnGap: 10,
     flexShrink: 0,
@@ -598,45 +558,45 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 4.16,
     borderTopLeftRadius: 4.16,
     borderTopRightRadius: 4.16,
-    backgroundColor: 'rgba(43, 43, 43, 1)',
+    backgroundColor: "rgba(43, 43, 43, 1)",
   },
   booked: {
-    alignSelf: 'stretch',
-    color: 'rgba(255, 255, 255, 1)',
-    fontFamily: 'Inter',
+    alignSelf: "stretch",
+    color: "rgba(255, 255, 255, 1)",
+    fontFamily: "Inter",
     fontSize: 13.867,
-    fontStyle: 'normal',
-    fontWeight: '700',
+    fontStyle: "normal",
+    fontWeight: "700",
     letterSpacing: 0.139,
   },
   hash0X4A293A86Cba66C1C1971C350Af5C4A0C31Fa5Eda730Ec70660C5D4C5343D1271: {
     width: 243,
-    color: 'rgba(255, 255, 255, 0.800000011920929)',
-    fontFamily: 'Inter',
+    color: "rgba(255, 255, 255, 0.800000011920929)",
+    fontFamily: "Inter",
     fontSize: 11.787,
-    fontStyle: 'normal',
-    fontWeight: '500',
+    fontStyle: "normal",
+    fontWeight: "500",
     lineHeight: 18.72,
     letterSpacing: 0.177,
   },
   frame133: {
-    flexDirection: 'row',
+    flexDirection: "row",
     paddingTop: 10.053,
     paddingLeft: 10.747,
     paddingBottom: 10.053,
     paddingRight: 10.747,
-    justifyContent: 'space-between',
-    alignItems: 'flex-start',
-    alignSelf: 'stretch',
+    justifyContent: "space-between",
+    alignItems: "flex-start",
+    alignSelf: "stretch",
     borderBottomLeftRadius: 12.133,
     borderBottomRightRadius: 12.133,
     borderTopLeftRadius: 12.133,
     borderTopRightRadius: 12.133,
-    backgroundColor: 'rgba(24, 24, 24, 1)',
+    backgroundColor: "rgba(24, 24, 24, 1)",
   },
   frame1322: {
-    flexDirection: 'column',
-    alignItems: 'flex-start',
+    flexDirection: "column",
+    alignItems: "flex-start",
     rowGap: 15,
     columnGap: 15,
     flexGrow: 1,
@@ -644,14 +604,14 @@ const styles = StyleSheet.create({
     flexBasis: 0,
   },
   frame1202: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    alignSelf: 'stretch',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    alignSelf: "stretch",
   },
   frame1173: {
-    flexDirection: 'column',
-    alignItems: 'flex-start',
+    flexDirection: "column",
+    alignItems: "flex-start",
     rowGap: 4.16,
     columnGap: 4.16,
     flexGrow: 1,
@@ -659,28 +619,28 @@ const styles = StyleSheet.create({
     flexBasis: 0,
   },
   now2: {
-    alignSelf: 'stretch',
-    color: 'rgba(255, 255, 255, 0.501960813999176)',
-    textAlign: 'right',
-    fontFamily: 'Inter',
+    alignSelf: "stretch",
+    color: "rgba(255, 255, 255, 0.501960813999176)",
+    textAlign: "right",
+    fontFamily: "Inter",
     fontSize: 12.48,
-    fontStyle: 'normal',
-    fontWeight: '500',
+    fontStyle: "normal",
+    fontWeight: "500",
     lineHeight: 15.98,
     letterSpacing: 0.187,
   },
   frame1182: {
     width: 35.36,
     height: 58.987,
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "column",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   frame1312: {
-    flexDirection: 'row',
+    flexDirection: "row",
     width: 35.36,
     height: 35.707,
-    alignItems: 'center',
+    alignItems: "center",
     rowGap: 10,
     columnGap: 10,
     flexShrink: 0,
@@ -688,11 +648,8 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 4.16,
     borderTopLeftRadius: 4.16,
     borderTopRightRadius: 4.16,
-    backgroundColor: 'rgba(43, 43, 43, 1)',
+    backgroundColor: "rgba(43, 43, 43, 1)",
   },
-
-
-
 });
 
-export default e;
+export default notification;

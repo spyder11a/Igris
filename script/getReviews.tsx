@@ -3,7 +3,7 @@ import { BrowserProvider, Contract } from "ethers";
 import { useAppKit, useAppKitAccount, useAppKitProvider } from "@reown/appkit-ethers-react-native";
 import SimpleHotelReviewABI from "./ContractJson/SimpleHotelReviewABI.json";
 import { useWalletStore } from "@/components/walletStore";
-const CONTRACT_ADDRESS = "0x95395BE9ACD6f8c208Fc8aFaF80ad72D9d40e1A6";
+const CONTRACT_ADDRESS = "0x4000Be6d42338c50C194b2a71E7e9f3e61Fb35EA";
 
 export function useHotelReview() {
   const { address, chainId, isConnected, walletProvider } = useWalletStore();
@@ -63,6 +63,5 @@ export function useHotelReview() {
     getAllReviews,
     address,
     isConnected,
-    open,
   };
 }

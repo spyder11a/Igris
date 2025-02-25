@@ -1,5 +1,5 @@
 // ReelsScreen.js
-import React, { useState, useRef,useEffect } from "react";
+import React, { useState, useRef , useEffect } from "react";
 import {
   View,
   FlatList,
@@ -17,7 +17,7 @@ import { Video, ResizeMode } from "expo-av"; // Changed this line
 import { MaterialIcons, FontAwesome } from "@expo/vector-icons";
 import Svg, { Circle, Rect, Path } from "react-native-svg";
 import { Redirect, useRouter,Link } from "expo-router";
-import {useHotelReview} from '../../../script/getReviews'
+import {useHotelReview} from '../../script/getReviews'
 const { width, height } = Dimensions.get("window");
 
 
@@ -67,7 +67,7 @@ const ReelItem = ({ item, isInFocus }) => {
 };
 
 const reels = () => {
-const router = useRouter();
+  const router = useRouter();
   const [focusedIndex, setFocusedIndex] = useState(0);
   const [reelsData, setReelsData] = useState([]); // State for fetched reels
   const { getAllReviews } = useHotelReview();
@@ -103,15 +103,6 @@ const router = useRouter();
     itemVisiblePercentThreshold: 50,
   });
 
-  const [liked, setLiked] = useState(false);
-  const lastTap = useRef(null);
-
-  const handleTap = () => {
-    const now = Date.now();
-
-    setLiked(!liked);
-  };
-
   return (
     <View style={styles.container}>
       <View style={styles.frame114} testID="1293:183">
@@ -136,7 +127,7 @@ const router = useRouter();
         <View style={styles.group46} testID="1293:186">
           <View style={styles.frame113} testID="1293:187">
             <Image
-              source={require("../../../assets/images/profile.png")}
+            
               style={styles.profile}
             />
             <View style={styles.frame112} testID="1293:191">
@@ -150,12 +141,12 @@ const router = useRouter();
           </View>
         </View>
 
-        <TouchableOpacity onPress={handleTap}>
+        <TouchableOpacity>
           <Svg
             width="28"
             height="24"
             viewBox="0 0 28 24"
-            fill={liked ? "white" : "none"}
+            fill='white'
           >
             <Path
               d="M14.2581 22.1976L14.2532 22.1976C14.0251 22.1981 13.7991 22.1536 13.5883 22.0665C13.3775 21.9794 13.186 21.8515 13.0249 21.6901L13.0244 21.6897L3.65523 12.3205C3.65463 12.3199 3.65403 12.3193 3.65343 12.3187C3.00716 11.6649 2.49731 10.8892 2.15354 10.0366C1.80945 9.18316 1.63863 8.26982 1.65104 7.34975L1.65108 7.34368C1.65724 6.51046 1.82773 5.68665 2.15277 4.91943C2.47781 4.15221 2.95102 3.45665 3.54529 2.8726C4.13957 2.28854 4.84323 1.82747 5.61597 1.51579C6.38872 1.2041 7.21536 1.04794 8.04856 1.05623L8.05857 1.05633L8.06858 1.05623C8.91669 1.04769 9.75788 1.20955 10.5423 1.53221C11.3266 1.85487 12.0382 2.33176 12.6348 2.9346L12.6348 2.93461L12.6385 2.93829L12.8023 3.10209C13.6049 3.90473 14.9063 3.90473 15.7089 3.10209L15.0018 2.39498L15.7181 3.09278C16.8378 1.94339 18.3361 1.23874 19.9356 1.10933C21.5318 0.980181 23.1207 1.43272 24.4093 2.38324C25.1383 2.94634 25.7394 3.65781 26.173 4.47063C26.608 5.28627 26.8643 6.18523 26.9247 7.10767C26.9852 8.03011 26.8484 8.95483 26.5235 9.82027C26.1987 10.6855 25.6933 11.4717 25.041 12.1264C25.0409 12.1265 25.0407 12.1267 25.0406 12.1268L15.4865 21.69L15.4864 21.6901C15.3252 21.8515 15.1337 21.9794 14.9229 22.0665C14.7121 22.1536 14.4861 22.1981 14.2581 22.1976Z"
