@@ -1,9 +1,34 @@
-import { Image,SafeAreaView,View,Text,Pressable, StyleSheet, ScrollView, Platform, ImageBackground } from 'react-native';
-import React from 'react'
+import { Image,SafeAreaView,View,Text,Pressable,Alert, StyleSheet, ScrollView, Platform, ImageBackground } from 'react-native';
+import React,{useState} from 'react'
 import Svg, { Circle, Rect, Path } from 'react-native-svg';
-
+import { useHotelBooking } from '../../../script/claimReward';
 
 const profile = () => {
+
+  const { claimInfluencerRewards, isConnected } = useHotelBooking();
+    const [creditScore, setCreditScore] = useState("135"); // Simulating a stored credit score
+
+    const handleClaim = async () => {
+        if (!isConnected) {
+            Alert.alert("Wallet Not Connected", "Please connect your wallet first.");
+            open(); // Open the wallet connection modal
+            return;
+        }
+
+        const score = parseInt(creditScore);
+      
+        try {
+            const txHash = await claimInfluencerRewards(score);
+            if (txHash) {
+                Alert.alert("Success", `Rewards claimed successfully!\nTx Hash: ${txHash}`);
+                setCreditScore("0"); // Reset credit score after successful claim
+            }
+        } catch (error) {
+            console.error("Error claiming rewards:", error);
+        }
+    };
+
+
   return (
     <ScrollView
     style={{ backgroundColor: "rgba(14, 14, 14, 1)" }} 
@@ -16,7 +41,7 @@ const profile = () => {
         <View style={styles.frame1082} testID="1272:165">
           <View style={styles.frame103} testID="1272:166">
             <Text style={styles.$3642K} testID="1272:167">
-              {`364.2k`}
+              {creditScore}
             </Text>
             <Text style={styles.creadits} testID="1272:168">
               {`Creadits`}

@@ -13,162 +13,148 @@ import {
   ScrollView,
   Platform,
   ImageBackground,
-  ActivityIndicator
+  ActivityIndicator,
+  Button
 } from "react-native";
-import React, { useState,useContext,useEffect,useRef} from "react";
+import React, { useState, useContext, useEffect, useRef } from "react";
 import Svg, { Circle, Rect, Path } from "react-native-svg";
 import * as ImagePicker from "expo-image-picker";
 import { Video } from "expo-av"; // Import Video from expo-av
 import axios from "axios";
-import { BookingContext } from '../context/BookingContext';
+import { BookingContext } from "../context/BookingContext";
 import { useHotelReview } from "../../../script/submitReview";
-
-
-
-
-
-
-
-
-
+import { Camera, CameraView } from 'expo-camera';
+import { useIsFocused } from '@react-navigation/native';
 
 const upload = () => {
-
-
-
   const { submitReview } = useHotelReview();
-  
+
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [hotelAddress, setHotelAddress] = useState(""); // Default text "Review"
   const [ipfsHash, setIpfsHash] = useState("");
   const [review, setReview] = useState("");
-  const [rating, setRating] = useState(3);
+  const [rating, setRating] = useState("");
   const [loading, setLoading] = useState(false);
   const { addBooking } = useContext(BookingContext);
 
-  
-
-
-
-
   const handleBooking = (ipfsHashValue) => {
-      const newBooking = {
-        ipfsHash: ipfsHashValue,
-        hotelAddress,
-        review,
-        id: Date.now(),
-      };
-    
-      addBooking(newBooking);
-      Alert.alert("Success", "Booking added!");
+    const newBooking = {
+      ipfsHash: ipfsHashValue,
+      hotelAddress,
+      review,
+      id: Date.now(),
     };
-  
 
-const shere = async () => {
+    addBooking(newBooking);
+    Alert.alert("Success", "Booking added!");
+  };
 
-      if (!selectedVideo) {
-        Alert.alert("Error", "Select a Video");
-        return;
-      }
-      if (review.trim() == "" || hotelAddress.trim() == "") {
-        Alert.alert("Error", "Both input fields are required");
-        return;
-      }
-    
-      setLoading(true);
+  const shere = async () => {
+    if (!selectedVideo) {
+      Alert.alert("Error", "Select a Video");
+      return;
+    }
+    if (review.trim() == "" || hotelAddress.trim() == "") {
+      Alert.alert("Error", "Both input fields are required");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const fileUri = selectedVideo.uri;
+      const fileName = fileUri.split("/").pop();
+
+      let formData = new FormData();
+      formData.append("file", {
+        uri: fileUri,
+        type: "video/mp4",
+        name: fileName,
+      });
+
+      const headers = {
+        "Content-Type": "multipart/form-data",
+        pinata_api_key: "0233035af3ed41ecf64e",
+        pinata_secret_api_key:
+          "251c8891c0e1168b65b562fc326d520cf82213058e9466104e513cead2fdf98d",
+      };
+
+      const response = await axios.post(
+        "https://api.pinata.cloud/pinning/pinFileToIPFS",
+        formData,
+        { headers }
+      );
+      const uploadedHash = response.data.IpfsHash;
+      console.log("File uploaded:", uploadedHash);
+
       try {
-        const fileUri = selectedVideo.uri;
-        const fileName = fileUri.split("/").pop();
-    
-        let formData = new FormData();
-        formData.append("file", {
-          uri: fileUri,
-          type: "video/mp4",
-          name: fileName,
-        });
-    
-        const headers = {
-          "Content-Type": "multipart/form-data",
-          pinata_api_key: "0233035af3ed41ecf64e",
-          pinata_secret_api_key: "251c8891c0e1168b65b562fc326d520cf82213058e9466104e513cead2fdf98d",
-        };
-    
-        const response = await axios.post(
-          "https://api.pinata.cloud/pinning/pinFileToIPFS",
-          formData,
-          { headers }
+        const txHash = await submitReview(
+          hotelAddress,
+          review,
+          uploadedHash,
+          rating
         );
-        const uploadedHash = response.data.IpfsHash;
-        console.log("File uploaded:", uploadedHash);
-
-
-
-        
-      
-
-        try {
-
-          const txHash = await submitReview(hotelAddress, review, uploadedHash, rating );
-          if (txHash === undefined){
-            return;
-          }
-          
-        } catch (error) {
-          const errorMessage = error instanceof Error ? error.message : String(error);
-          Alert.alert("Error", "Failed to submit review: " + errorMessage);
-          console.log("❌ Review submission failed:", errorMessage);
+        if (txHash === undefined) {
           return;
         }
-
-        // ✅ Wait for state to update, then add booking
-        setIpfsHash(uploadedHash);
-        handleBooking(uploadedHash);
-        
       } catch (error) {
-        console.error("Upload failed:", error);
-      } finally {
-        setLoading(false);
-       
+        const errorMessage =
+          error instanceof Error ? error.message : String(error);
+        Alert.alert("Error", "Failed to submit review: " + errorMessage);
+        console.log("❌ Review submission failed:", errorMessage);
+        return;
       }
-    };
-    
+
+      // ✅ Wait for state to update, then add booking
+      setIpfsHash(uploadedHash);
+      handleBooking(uploadedHash);
+    } catch (error) {
+      console.error("Upload failed:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const pickVideo = async () => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (status !== "granted") {
-      Alert.alert("Permission Denied", "You need to grant permission to access media.");
+      Alert.alert(
+        "Permission Denied",
+        "You need to grant permission to access media."
+      );
       return;
     }
-  
+
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Videos,
       allowsEditing: true,
       quality: 1,
     });
-  
+
     if (!result.canceled && result.assets && result.assets.length > 0) {
       setSelectedVideo(result.assets[0]); // Store the whole object, not just the uri
     } else {
       Alert.alert("Error", "No video selected.");
     }
   };
-  
-
 
   const [keyboardVisible, setKeyboardVisible] = useState(false);
   const scrollViewRef = useRef(null);
 
-
   useEffect(() => {
-    const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
-      setKeyboardVisible(true);
-      // Scroll to bottom with smooth animation when keyboard opens
-      scrollViewRef.current?.scrollToEnd({ animated: true, duration: 10 });
-
-    });
-    const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
-      setKeyboardVisible(false);
-    });
+    const keyboardDidShowListener = Keyboard.addListener(
+      "keyboardDidShow",
+      () => {
+        setKeyboardVisible(true);
+        // Scroll to bottom with smooth animation when keyboard opens
+        scrollViewRef.current?.scrollToEnd({ animated: true, duration: 10 });
+      }
+    );
+    const keyboardDidHideListener = Keyboard.addListener(
+      "keyboardDidHide",
+      () => {
+        setKeyboardVisible(false);
+      }
+    );
 
     return () => {
       keyboardDidShowListener.remove();
@@ -177,28 +163,93 @@ const shere = async () => {
   }, []);
 
 
+  
+
+  //
+
+  const [hasPermission, setHasPermission] = useState<boolean | null>(null);
+  const [scanned, setScanned] = useState(false);
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    (async () => {
+      const { status } = await Camera.requestCameraPermissionsAsync();
+      setHasPermission(status === 'granted');
+    })();
+  }, []);
+
+  const handleBarCodeScanned = ({ data }: { data: string }) => {
+    setScanned(true);
+    const extractedAddress = data.includes(':') ? data.split(':')[1] : data;
+    setHotelAddress(extractedAddress);
+  };
+
+  if (hasPermission === null) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <Text>Requesting camera permission...</Text>
+      </SafeAreaView>
+    );
+  }
+
+  if (hasPermission === false) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <Text>No access to camera</Text>
+        <Button 
+          title="Request Permission" 
+          onPress={async () => {
+            const { status } = await Camera.requestCameraPermissionsAsync();
+            setHasPermission(status === 'granted');
+          }} 
+        />
+      </SafeAreaView>
+    );
+  }
+
+
+
+
+
+
+
+
+
+
+
+
   return (
     <KeyboardAvoidingView
-    behavior={Platform.OS === 'ios' ? 'padding' : 'height'} 
-    style={{ flex: 1 }}
-  >
-     <ScrollView 
-
-      style={{ backgroundColor: "rgba(14, 14, 14, 1)" }}
-               keyboardShouldPersistTaps="handled"
-      showsVerticalScrollIndicator={false} // Hides the vertical scrollbar
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={{ flex: 1 }}
+    >
+      <ScrollView
+        style={{ backgroundColor: "rgba(14, 14, 14, 1)" }}
+        keyboardShouldPersistTaps="handled"
+        showsVerticalScrollIndicator={false} // Hides the vertical scrollbar
         ref={scrollViewRef}
         contentContainerStyle={{
-          flexGrow: 1,
           paddingBottom: keyboardVisible ? 30 : 0, // Add extra margin when keyboard is visible
         }}
-
->
-      <View style={styles.root}>
+      >
+        {isFocused && !scanned ? (
+        <CameraView
+          style={styles.fullScreenCamera}
+          facing="back"
+          onBarcodeScanned={handleBarCodeScanned}
+        />
+      ) : (
+        <View style={styles.root}>
         <View style={styles.frame22} testID="1269:3">
-            <Svg  width="9" height="16" viewBox="0 0 9 16" fill="none">
-           <Path d="M7.57319 1.47705L1.24316 7.80708L7.57319 14.1371" stroke="white" strokeWidth="2.11001" strokeLinecap="round" strokeLinejoin="round"/>
-         </Svg>
+          <Svg width="9" height="16" viewBox="0 0 9 16" fill="none">
+            <Path
+              d="M7.57319 1.47705L1.24316 7.80708L7.57319 14.1371"
+              stroke="white"
+              strokeWidth="2.11001"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </Svg>
         </View>
         <View style={styles.frame101} testID="1269:5">
           <Text style={styles.newPost} testID="1269:6">
@@ -207,15 +258,14 @@ const shere = async () => {
         </View>
         <View style={styles.frame100} testID="1269:7">
           <View style={styles.frame99} testID="1269:8">
-            
             <TouchableOpacity style={styles.frame45} onPress={pickVideo}>
               {selectedVideo ? (
-                 <Video
-                 source={{ uri: selectedVideo.uri }}
-                 style={styles.video} // Full cover video
-                 useNativeControls
-                 resizeMode="cover" // Ensures video covers the whole div
-               />
+                <Video
+                  source={{ uri: selectedVideo.uri }}
+                  style={styles.video} // Full cover video
+                  useNativeControls
+                  resizeMode="cover" // Ensures video covers the whole div
+                />
               ) : (
                 <View style={styles.frame46}>
                   <Svg width="36" height="35" viewBox="0 0 36 35" fill="none">
@@ -233,15 +283,20 @@ const shere = async () => {
             <View style={styles.frame79} testID="1269:13">
               <View style={styles.frame113} testID="1276:176">
                 <View style={styles.frame792} testID="1269:14">
-                <TextInput
-                      style={[styles.input,{
-                      color: hotelAddress === "" ? "#888" : "#fff" }]} // Change text color
-                      onChangeText={setHotelAddress}
-                      placeholder="hotelAddress"
-                      placeholderTextColor="#888"
-                      selectionColor="#fff" // Cursor color
-                    />
-                  <Svg width="17" height="18" viewBox="0 0 17 18" fill="none">
+                  <TextInput
+                    style={[
+                      styles.input,
+                      {
+                        color: hotelAddress === "" ? "#888" : "#fff",
+                      },
+                    ]} // Change text color
+                    onChangeText={setHotelAddress}
+                    placeholder="hotel address"
+                    value={hotelAddress} // Truncated format
+                    placeholderTextColor="#888"
+                    selectionColor="#fff" // Cursor color
+                  />
+                  {/* <Svg width="17" height="18" viewBox="0 0 17 18" fill="none">
                     <Circle
                       cx="8.45957"
                       cy="8.61362"
@@ -255,78 +310,151 @@ const shere = async () => {
                       stroke="black"
                       stroke-width="0.351668"
                     />
-                  </Svg>
+                  </Svg> */}
                 </View>
+                <View style={styles.frame792} testID="1269:14">
+                  <TextInput
+                    style={[
+                      styles.input,
+                      {
+                        color: hotelAddress === "" ? "#888" : "#fff",
+                      },
+                    ]} // Change text color
+                    onChangeText={(text) => {
+                      // Allow only numbers
+                      const numericText = text.replace(/[^0-9]/g, "");
+                      setRating(numericText);
+                    }}
+                    placeholder="Rate"
+                    placeholderTextColor="#888"
+                    selectionColor="#fff" // Cursor color
+                    keyboardType="numeric"
+                    
+                  />
+                  {/* <Svg width="17" height="18" viewBox="0 0 17 18" fill="none">
+                    <Circle
+                      cx="8.45957"
+                      cy="8.61362"
+                      r="8.44004"
+                      fill="#222222"
+                      fill-opacity="0.1"
+                    />
+                    <Path
+                      d="M10.6803 5.91475L10.6823 5.91473C10.8548 5.91474 11.0202 5.98327 11.1422 6.10524C11.2638 6.22682 11.3323 6.39157 11.3327 6.56346C11.3327 6.56402 11.3327 6.56459 11.3327 6.56515H11.1569C11.158 6.62333 11.1472 6.68112 11.1251 6.73499C11.1031 6.78885 11.0703 6.83764 11.0287 6.87836L10.6803 5.91475ZM10.6803 5.91475C10.5978 5.9157 10.5164 5.93328 10.4409 5.96645C10.3663 5.99923 10.299 6.04655 10.243 6.10564L9.66573 6.68288C9.04773 7.30089 8.04574 7.30089 7.42773 6.68288L6.83923 6.09438C6.72616 5.98131 6.5732 5.91675 6.41337 5.91476L6.41337 5.91474H6.41117C6.23867 5.91474 6.07324 5.98327 5.95127 6.10524C5.82929 6.22722 5.76077 6.39265 5.76077 6.56515H5.76065L5.76089 6.57166C5.7666 6.72567 5.83106 6.87164 5.94103 6.97959L6.53507 7.57364C7.15591 8.19448 7.15265 9.20205 6.52781 9.81886L5.94168 10.3975C5.9416 10.3975 5.94152 10.3976 5.94144 10.3977L10.6803 5.91475ZM11.1518 7.00396C11.1519 7.00389 11.1519 7.00381 11.152 7.00373L6.06473 10.5231C6.02317 10.5638 5.99036 10.6126 5.96832 10.6664C5.94629 10.7203 5.93549 10.7781 5.9366 10.8363H5.76077C5.76077 10.8368 5.76077 10.8374 5.76077 10.8379C5.76121 11.0098 5.82968 11.1746 5.95127 11.2962C6.07324 11.4182 6.23867 11.4867 6.41117 11.4867L6.41327 11.4867C6.49413 11.4857 6.57399 11.4687 6.64826 11.4367C6.72205 11.405 6.78887 11.359 6.8449 11.3014L7.4196 10.7267C8.04046 10.1058 9.04808 10.1091 9.66487 10.734L10.2297 11.3062L10.2303 11.3068C10.2902 11.367 10.362 11.414 10.441 11.4449C10.519 11.4754 10.6023 11.4896 10.6859 11.4867C10.8571 11.4857 11.0211 11.4173 11.1422 11.2962C11.2642 11.1742 11.3327 11.0088 11.3327 10.8363H11.3328L11.3326 10.8298C11.3269 10.6757 11.2624 10.5298 11.1524 10.4218L10.5584 9.82778C9.93756 9.20694 9.94082 8.19937 10.5657 7.58256L11.1518 7.00396Z"
+                      fill="black"
+                      stroke="black"
+                      stroke-width="0.351668"
+                    />
+                  </Svg> */}
+                </View>
+                
                 <View style={styles.frame80} testID="1269:19">
                   {/* <Text style={styles.steakTartareBecamePopularInThe19ThCenturyInNewYorkItWasOriginallyMadeWithHamburgSteakBecauseOfThe} testID="1269:20">
-                  {`Steak tartare became popular in the 19th century in New York. It was originally made with hamburg steak because of the`}
-                </Text> */}
-                 
-                    <TextInput
-                      style={[styles.input,{
-                      color: review === "" ? "#888" : "#fff" }]} // Change text color
-                      onChangeText={setReview}
-                      placeholder="Enter Your Review"
-                      placeholderTextColor="#888"
-                      selectionColor="#fff" // Cursor color
-                    />
-                  </View>
+                {`Steak tartare became popular in the 19th century in New York. It was originally made with hamburg steak because of the`}
+              </Text> */}
+
+                  <TextInput
+                    style={[
+                      styles.input,
+                      {
+                        color: review === "" ? "#888" : "#fff",
+                      },
+                    ]} // Change text color
+                    onChangeText={setReview}
+                    placeholder="Enter Your Review"
+                    placeholderTextColor="#888"
+                    selectionColor="#fff" // Cursor color
+                  />
                 </View>
               </View>
-              
-              <View style={styles.frame43} testID="1269:21">
+            </View>
 
-
-
-              <TouchableOpacity onPress={shere} style={styles.frame115} testID="1276:178" disabled={loading}>
-<View style={styles.frame114} testID="1276:177">
-  {loading ? (
-  <ActivityIndicator size={18} color="#000000" />
-
-  ) : (
-    <>
-      <Svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-        <Path
-          d="M5.16853 6.80239L5.16712 6.80379L5.16431 6.8059L5.15728 6.81153C5.12675 6.8347 5.09719 6.8591 5.06866 6.88468C4.99502 6.9499 4.92416 7.01818 4.85625 7.08935C4.68745 7.26729 4.47082 7.53175 4.26756 7.88553C3.85821 8.59941 3.51428 9.66356 3.7077 11.0864C3.8983 12.491 4.4884 13.6648 5.48573 14.4835C6.48025 15.2994 7.82644 15.7186 9.45466 15.7186C11.1335 15.7186 12.4741 15.0891 13.361 14.0095C14.2402 12.9397 14.6326 11.4803 14.5391 9.88511C14.4491 8.35465 13.6156 7.19344 12.8792 6.16798L12.6689 5.87469C11.8657 4.74091 11.232 3.69645 11.386 2.23492C11.3938 2.16136 11.386 2.08699 11.3632 2.01663C11.3404 1.94626 11.303 1.88149 11.2536 1.8265C11.2041 1.77152 11.1436 1.72756 11.076 1.69747C11.0084 1.66738 10.9353 1.65184 10.8613 1.65186C10.5927 1.65186 10.2846 1.73485 9.98779 1.86004C9.6441 2.0074 9.31978 2.19637 9.02211 2.42271C8.37152 2.91364 7.72094 3.65355 7.37419 4.64244C7.02815 5.62852 7.20398 6.56818 7.45719 7.25252C7.62388 7.70196 7.44312 8.14576 7.17093 8.27517C7.05511 8.32996 6.9226 8.33787 6.8011 8.29724C6.67959 8.2566 6.57849 8.17058 6.51894 8.05714L5.95205 6.98033C5.91657 6.91278 5.86685 6.85373 5.80634 6.80725C5.74582 6.76078 5.67594 6.72798 5.60152 6.71113C5.52711 6.69428 5.44992 6.69378 5.37528 6.70966C5.30065 6.72553 5.23035 6.75741 5.16923 6.80309"
-          fill="black"
-        />
-      </Svg>
-      <Text style={styles.share} testID="1269:24">
-       Share
-      </Text>
-    </>
-  )}
-</View>
-</TouchableOpacity>
-
-              </View>
+            <View style={styles.frame43} testID="1269:21">
+              <TouchableOpacity
+                onPress={shere}
+                style={styles.frame115}
+                testID="1276:178"
+                disabled={loading}
+              >
+                <View style={styles.frame114} testID="1276:177">
+                  {loading ? (
+                    <ActivityIndicator size={18} color="#000000" />
+                  ) : (
+                    <>
+                      <Svg
+                        width="18"
+                        height="18"
+                        viewBox="0 0 18 18"
+                        fill="none"
+                      >
+                        <Path
+                          d="M5.16853 6.80239L5.16712 6.80379L5.16431 6.8059L5.15728 6.81153C5.12675 6.8347 5.09719 6.8591 5.06866 6.88468C4.99502 6.9499 4.92416 7.01818 4.85625 7.08935C4.68745 7.26729 4.47082 7.53175 4.26756 7.88553C3.85821 8.59941 3.51428 9.66356 3.7077 11.0864C3.8983 12.491 4.4884 13.6648 5.48573 14.4835C6.48025 15.2994 7.82644 15.7186 9.45466 15.7186C11.1335 15.7186 12.4741 15.0891 13.361 14.0095C14.2402 12.9397 14.6326 11.4803 14.5391 9.88511C14.4491 8.35465 13.6156 7.19344 12.8792 6.16798L12.6689 5.87469C11.8657 4.74091 11.232 3.69645 11.386 2.23492C11.3938 2.16136 11.386 2.08699 11.3632 2.01663C11.3404 1.94626 11.303 1.88149 11.2536 1.8265C11.2041 1.77152 11.1436 1.72756 11.076 1.69747C11.0084 1.66738 10.9353 1.65184 10.8613 1.65186C10.5927 1.65186 10.2846 1.73485 9.98779 1.86004C9.6441 2.0074 9.31978 2.19637 9.02211 2.42271C8.37152 2.91364 7.72094 3.65355 7.37419 4.64244C7.02815 5.62852 7.20398 6.56818 7.45719 7.25252C7.62388 7.70196 7.44312 8.14576 7.17093 8.27517C7.05511 8.32996 6.9226 8.33787 6.8011 8.29724C6.67959 8.2566 6.57849 8.17058 6.51894 8.05714L5.95205 6.98033C5.91657 6.91278 5.86685 6.85373 5.80634 6.80725C5.74582 6.76078 5.67594 6.72798 5.60152 6.71113C5.52711 6.69428 5.44992 6.69378 5.37528 6.70966C5.30065 6.72553 5.23035 6.75741 5.16923 6.80309"
+                          fill="black"
+                        />
+                      </Svg>
+                      <Text style={styles.share} testID="1269:24">
+                        Share
+                      </Text>
+                    </>
+                  )}
+                </View>
+              </TouchableOpacity>
             </View>
           </View>
         </View>
-     
-    </ScrollView>
-  </KeyboardAvoidingView>
-   
+      </View>
+        
+      )}
+
+       
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 
 const styles = StyleSheet.create({
-  data:{
-    paddingLeft:22,
-    paddingRight:22,
-  
-    gap:10
+  fullScreenContainer: {
+    flex: 1,
+    backgroundColor: 'black',
   },
-  IPFS:{
-  
-    alignSelf: 'stretch',
-    color: 'rgba(255, 255, 255, 0.6000000238418579)',
-    fontFamily: 'Inter',
-    fontSize: 14.77,
-    fontStyle: 'normal',
-    fontWeight: '500',
-    lineHeight: 18.99,
+  fullScreenCamera: {
+    width: 390,
+    height: 850,
+    position: 'absolute',
+    top: 0,
+    left: 0,
+  },
+  resultContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.7)',
+  },
+  text: {
+    marginBottom: 20,
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#fff',
+    backgroundColor: '#000',
+    padding: 10,
+    borderRadius: 5,
+  },
 
+  
+  data: {
+    paddingLeft: 22,
+    paddingRight: 22,
+
+    gap: 10,
+  },
+  IPFS: {
+    alignSelf: "stretch",
+    color: "rgba(255, 255, 255, 0.6000000238418579)",
+    fontFamily: "Inter",
+    fontSize: 14.77,
+    fontStyle: "normal",
+    fontWeight: "500",
+    lineHeight: 18.99,
   },
   video: {
     flexDirection: "row",
@@ -349,17 +477,20 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(217, 217, 217, 0.05098039284348488)",
   },
   root: {
+   
+   
     width: 390,
+    height: 1150,
     paddingTop: 79.477,
     paddingLeft: 0,
     paddingBottom: 0,
     paddingRight: 0,
     flexDirection: "column",
-    flexGrow:1,
+    flexGrow: 1,
     alignItems: "flex-start",
     rowGap: 33.408,
     columnGap: 33.408,
-    backgroundColor: "rgba(14, 14, 14, 1)",
+    backgroundColor: "#rgba(14, 14, 14, 1)",
   },
   frame22: {
     flexDirection: "row",
@@ -490,9 +621,8 @@ const styles = StyleSheet.create({
     borderColor: "rgba(24, 24, 24, 1)",
   },
 
-  input:
-  {
-    width:350,
+  input: {
+    width: 350,
     flexGrow: 1,
     flexShrink: 0,
     flexBasis: 0,
@@ -510,7 +640,7 @@ const styles = StyleSheet.create({
       flexShrink: 0,
       flexBasis: 0,
       alignSelf: "stretch",
-      backgroundColor: '#00ff00',
+      backgroundColor: "#00ff00",
       fontFamily: "Inter",
       fontSize: 14.77,
       fontStyle: "normal",
@@ -535,7 +665,7 @@ const styles = StyleSheet.create({
     lineHeight: 18.663,
   },
   frame43: {
-    paddingTop: 0,
+    paddingTop: 50,
     paddingLeft: 21.1,
     paddingBottom: 0,
     paddingRight: 21.1,
@@ -556,7 +686,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "flex-center",
     justifyContent: "center",
-   
+
     rowGap: 10,
     columnGap: 10,
     borderBottomLeftRadius: 32.353,
@@ -566,11 +696,11 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(255, 255, 255, 1)",
   },
   frame114: {
-      flexDirection: "row",
-      alignItems: "center", // Fix: "flex-center" is incorrect, use "center"
-      justifyContent: "center", // Ensures horizontal centering
-      rowGap: 4,
-      columnGap: 4,
+    flexDirection: "row",
+    alignItems: "center", // Fix: "flex-center" is incorrect, use "center"
+    justifyContent: "center", // Ensures horizontal centering
+    rowGap: 4,
+    columnGap: 4,
   },
 });
 

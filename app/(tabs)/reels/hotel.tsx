@@ -7,12 +7,16 @@ import {
   TouchableOpacity,
   Platform,
   Alert,
+  Pressable,
+  ImageBackground,
 
 } from "react-native";
 import Svg, { Circle, Rect, Path } from "react-native-svg";
 import { Redirect, useRouter, Link } from "expo-router";
 import { useHotelBooking } from "../../../script/booking";
-import react , { useState } from 'react';
+import react , { useState,useEffect } from 'react';
+import { useNavigation } from "expo-router";
+
 export default function hotel() {
   const router = useRouter();
   const { bookHotel } = useHotelBooking();
@@ -34,6 +38,22 @@ export default function hotel() {
         setIsLoading(false);
     }
 };
+
+
+
+
+//
+
+  const [selected, setSelected] = useState(1);
+
+
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    navigation.setOptions({
+      gestureEnabled: false,
+    });
+  }, [navigation]);
 
 
 
@@ -101,28 +121,89 @@ export default function hotel() {
                     </View>
                   </View>
                   <View style={styles.frame3} testID="1256:2237">
-                    <View style={styles.frame25} testID="1256:2238">
-                      <Text style={styles.discription} testID="1256:2239">
+                    <Pressable style={[styles.frame25, selected === 1 && styles._frame25]} onPress={() => setSelected(1)}>
+                      <Text  style={[styles.discription, selected === 1 && styles._discription]}  testID="1256:2239">
                         {`Discription`}
                       </Text>
-                    </View>
-                    <View style={styles.frame27} testID="1256:2240">
-                      <Text style={styles.post} testID="1256:2241">
+                    </Pressable>
+                    <Pressable style={[styles.frame25, selected === 0 && styles._frame25]} onPress={() => setSelected(0)}>
+                      <Text  style={[styles.discription, selected === 0 && styles._discription]}  testID="1256:2239">
                         {`Post`}
                       </Text>
-                    </View>
+                    </Pressable>
+                   
                   </View>
                 </View>
               </View>
-              <Text
-                style={
-                  styles.steakTartareBecamePopularInThe19ThCenturyInNewYorkItWasOriginallyMadeWithHamburgSteakBecauseOfTheRelativelyInexpensiveCostOfTheMeatOverTimeItBecameAClassicFrenchDishWithTheIngredientsChangeingIntoTheFlavorsWeAreFamiliarWithToday
-                }
-                testID="1256:2242"
-              >
-                {`Steak tartare became popular in the 19th century in New York. It was originally made with hamburg steak because of the relatively inexpensive cost of the meat. Over time it became a classic French dish, with the ingredients changeing into the flavors we are familiar with today.
-`}
-              </Text>
+              {selected==1 ?(
+               <Text
+               style={
+                 styles.steakTartareBecamePopularInThe19ThCenturyInNewYorkItWasOriginallyMadeWithHamburgSteakBecauseOfTheRelativelyInexpensiveCostOfTheMeatOverTimeItBecameAClassicFrenchDishWithTheIngredientsChangeingIntoTheFlavorsWeAreFamiliarWithToday
+               }
+               testID="1256:2242"
+             >
+               {`Steak tartare became popular in the 19th century in New York. It was originally made with hamburg steak because of the relatively inexpensive cost of the meat. Over time it became a classic French dish, with the ingredients changeing into the flavors we are familiar with today.
+`               }
+             </Text>
+
+              ):(
+                <View style={styles.frame29} testID="1381:608">
+                <ImageBackground source={require("../../../assets/images/food1.png")} style={styles.frame32} testID="1381:609">
+                  <View style={styles.group19} testID="1381:618">
+                    <View style={styles.frame44} testID="1381:619">
+                      <ImageBackground  source={require("../../../assets/images/profile.png")}  style={styles.group81}  width={34.46} height={34.46}/>
+                      <Text style={styles.kai06} testID="1381:622">
+                        {`@kai_06`}
+                      </Text>
+                      <Text style={styles.$0XAbdf56} testID="1381:623">
+                        {`0xABDF.........56`}
+                      </Text>
+                    </View>
+                  </View>
+                </ImageBackground>
+                <ImageBackground source={require("../../../assets/images/food1.png")} style={styles.frame32} testID="1381:609">
+                  <View style={styles.group19} testID="1381:618">
+                    <View style={styles.frame44} testID="1381:619">
+                      <ImageBackground  source={require("../../../assets/images/profile.png")}  style={styles.group81}  width={34.46} height={34.46}/>
+                      <Text style={styles.kai06} testID="1381:622">
+                        {`@kai_06`}
+                      </Text>
+                      <Text style={styles.$0XAbdf56} testID="1381:623">
+                        {`0xABDF.........56`}
+                      </Text>
+                    </View>
+                  </View>
+                </ImageBackground>
+                <ImageBackground source={require("../../../assets/images/food1.png")} style={styles.frame32} testID="1381:609">
+                  <View style={styles.group19} testID="1381:618">
+                    <View style={styles.frame44} testID="1381:619">
+                      <ImageBackground  source={require("../../../assets/images/profile.png")}  style={styles.group81}  width={34.46} height={34.46}/>
+                      <Text style={styles.kai06} testID="1381:622">
+                        {`@kai_06`}
+                      </Text>
+                      <Text style={styles.$0XAbdf56} testID="1381:623">
+                        {`0xABDF.........56`}
+                      </Text>
+                    </View>
+                  </View>
+                </ImageBackground>
+                <ImageBackground source={require("../../../assets/images/food1.png")} style={styles.frame32} testID="1381:609">
+                  <View style={styles.group19} testID="1381:618">
+                    <View style={styles.frame44} testID="1381:619">
+                      <ImageBackground  source={require("../../../assets/images/profile.png")}  style={styles.group81}  width={34.46} height={34.46}/>
+                      <Text style={styles.kai06} testID="1381:622">
+                        {`@kai_06`}
+                      </Text>
+                      <Text style={styles.$0XAbdf56} testID="1381:623">
+                        {`0xABDF.........56`}
+                      </Text>
+                    </View>
+                  </View>
+                </ImageBackground>
+              </View>
+
+              )
+            }
             </View>
             <TouchableOpacity
               style={styles.frame21}
@@ -293,6 +374,15 @@ const styles = StyleSheet.create({
     columnGap: 4.738,
   },
   discription: {
+    color: "#D3D3D3",
+    textAlign: "center",
+    fontFamily: "Inter",
+    fontSize: 14.793,
+    fontStyle: "normal",
+    fontWeight: "600",
+    lineHeight: 15.27,
+  },
+  _discription: {
     color: "rgba(0, 0, 0, 1)",
     textAlign: "center",
     fontFamily: "Inter",
@@ -323,7 +413,26 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 43.959,
     borderTopLeftRadius: 43.959,
     borderTopRightRadius: 43.959,
+    backgroundColor: "rgba(217, 217, 217, 0.10196078568696976)",
+  },
+  _frame25: {
+    flexDirection: "row",
+    height: 45.717,
+    paddingTop: 15.122,
+    paddingLeft: 22.507,
+    paddingBottom: 15.122,
+    paddingRight: 22.507,
+    justifyContent: "center",
+    alignItems: "center",
+    rowGap: 3.517,
+    columnGap: 3.517,
+    borderBottomLeftRadius: 43.959,
+    borderBottomRightRadius: 43.959,
+    borderTopLeftRadius: 43.959,
+    borderTopRightRadius: 43.959,
     backgroundColor: "rgba(255, 255, 255, 1)",
+   
+   
   },
   post: {
     color: "rgba(255, 255, 255, 1)",
@@ -355,7 +464,7 @@ const styles = StyleSheet.create({
     {
       minHeight: 189.901,
       alignSelf: "stretch",
-      color: "rgba(255, 255, 255, 0.6000000238418579)",
+      color: "#fcfcfc",
       fontFamily: "Inter",
       fontSize: 14.77,
       fontStyle: "normal",
@@ -390,5 +499,69 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 63.652,
     borderTopRightRadius: 63.652,
     backgroundColor: "rgba(255, 255, 255, 1)",
+  },
+  kai06: {
+    color: 'rgba(255, 255, 255, 1)',
+    textAlign: 'center',
+    fontFamily: 'Inter',
+    fontSize: 14.77,
+    fontStyle: 'normal',
+    fontWeight: '500',
+  },
+  $0XAbdf56: {
+    width: 119.216,
+    color: 'rgba(255, 255, 255, 1)',
+    fontFamily: 'Inter',
+    fontSize: 14.77,
+    fontStyle: 'normal',
+    fontWeight: '600',
+  },
+  frame29: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    alignContent: 'center',
+    rowGap: 17,
+    flexGrow: 1,
+    flexShrink: 0,
+    flexBasis: 0,
+    flexWrap: 'wrap',
+  },
+  frame32: {
+    width: 165.013,
+    height: 227.75999,
+    paddingTop: 21.493,
+    paddingLeft: 15.947,
+    paddingBottom: 21.493,
+    paddingRight: 15.947,
+    flexDirection: 'column',
+    justifyContent: 'flex-end',
+    alignItems: 'flex-start',
+    rowGap: 3.467,
+    columnGap: 3.467,
+    overflow: 'hidden',
+    borderBottomLeftRadius: 24.267,
+    borderBottomRightRadius: 24.267,
+    borderTopLeftRadius: 24.267,
+    borderTopRightRadius: 24.267,
+    backgroundColor: 'rgba(25, 25, 25, 1)',
+  },
+  group19: {
+    width: 114.292,
+    height: 80.31,
+    flexShrink: 0,
+  },
+  frame44: {
+    width: 114.292,
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    rowGap: 4.923,
+    columnGap: 4.923,
+  },
+  group81: {
+   height:34.46,
+   width: 34.46,
+   overflow: 'hidden',
+   borderRadius: 20,
   },
 });
