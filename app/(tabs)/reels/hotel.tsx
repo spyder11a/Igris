@@ -14,7 +14,7 @@ import {
 import Svg, { Circle, Rect, Path } from "react-native-svg";
 import { Redirect, useRouter, Link } from "expo-router";
 import { useHotelBooking } from "../../../script/booking";
-import react , { useState,useEffect } from 'react';
+import React , { useState,useEffect } from 'react';
 import { useNavigation } from "expo-router";
 
 export default function hotel() {
