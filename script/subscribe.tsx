@@ -3,6 +3,7 @@ import { BrowserProvider, parseEther, Contract } from "ethers";
 import { useAppKit, useAppKitAccount, useAppKitProvider } from "@reown/appkit-ethers-react-native";
 import HotelBookingABI from "./ContractJson/HotelBookingABI.json"; // Import the contract ABI
 import { useWalletStore } from "../components/walletStore";
+import { Alert } from "react-native";
 
 // Replace with your deployed smart contract address
 const CONTRACT_ADDRESS = "0xc300D8ca0FfFb77496F1249fCC0A7C745AB3ad64";
@@ -53,6 +54,7 @@ export function useHotelBooking() {
             console.log("⏳ Waiting for transaction confirmation...");
             await tx.wait();
             console.log("🎉 Subscription successful! Tx:", tx.hash);
+            Alert.alert("🎉 Subscription successful! Tx:", tx.hash);
             return tx.hash;
         } catch (error: unknown) {
             if (error instanceof Error) {

@@ -67,7 +67,7 @@ const ReelItem = ({ item, isInFocus }) => {
 };
 
 const reels = () => {
-const router = useRouter();
+  const router = useRouter();
   const [focusedIndex, setFocusedIndex] = useState(0);
   const [reelsData, setReelsData] = useState([]); // State for fetched reels
   const { getAllReviews } = useHotelReview();
@@ -83,7 +83,7 @@ const router = useRouter();
         address: "@user1",
         likes: 1234,
         rating: 4.5,
-        description: review.description || "No description",
+        description: review.reviewText || "No description",
         hotel: review.hotel || "Unknown",
         location: review.location || "N/A",
       }));
@@ -117,7 +117,7 @@ const router = useRouter();
       <View style={styles.frame114} testID="1293:183">
         <TouchableOpacity onPress={() => router.back()} style={styles.back}>
           <Svg
-            xmlns="http://www.w3.org/2000/svg"
+           
             width="9"
             height="15"
             viewBox="0 0 9 15"
@@ -223,8 +223,7 @@ const router = useRouter();
             }
             testID="1293:210"
           >
-            {`Steak tartare became popular in the 19th century in New York. It was originally made with hamburg steak because of the`}
-          </Text>
+            {reelsData[focusedIndex]?.description || "No description available"}    </Text>
         </View>
       </View>
     </View>
@@ -386,7 +385,7 @@ const styles = StyleSheet.create({
     bottom: 10.437,
     paddingTop: 0,
     paddingLeft: 20.8,
-    paddingBottom: 0,
+    paddingBottom: 15,
     paddingRight: 20.8,
     flexDirection: "column",
     alignItems: "flex-start",

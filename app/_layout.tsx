@@ -61,6 +61,7 @@ export default function App() {
          headerShown: false, // Hide the header
        }}
       />
+       <Stack.Screen component={"./hotel"} />
       <AppKit />
     </>
   )

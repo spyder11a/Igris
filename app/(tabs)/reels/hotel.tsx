@@ -16,6 +16,8 @@ import { Redirect, useRouter, Link } from "expo-router";
 import { useHotelBooking } from "../../../script/booking";
 import React , { useState,useEffect } from 'react';
 import { useNavigation } from "expo-router";
+import { LinearGradient } from "expo-linear-gradient"; 
+
 
 export default function hotel() {
   const router = useRouter();
@@ -76,10 +78,16 @@ export default function hotel() {
             </Svg>
           </TouchableOpacity>
         </View>
-        <Image
-          source={require("../../../assets/images/a.png")}
+
+     
+     <Image
+          source={require("../../../assets/images/_dinner1.png")}
           style={styles.rectangle9}
         />
+   
+        
+
+        
         <View style={styles.frame98} testID="1256:2218">
           <View style={styles.frame22} testID="1256:2219">
             {/* <Vector/> */}

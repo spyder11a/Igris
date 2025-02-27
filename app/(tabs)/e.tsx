@@ -58,42 +58,42 @@ const notification = () => {
           ) : (
             [...bookings].reverse().map((data) => (
               <View style={styles.frame129} testID="1348:220">
-                <View style={styles.frame132} testID="1348:221">
-                  <View style={styles.frame120} testID="1348:222">
-                    <View style={styles.frame117} testID="1348:223">
-                      <Text style={styles.posted} testID="1348:224">
-                        {`Posted!!!`}
-                      </Text>
-                      <Text
-                        style={
-                          styles.stephanieMarinkovicPostedANewRecipeWhiskeySour
-                        }
-                        testID="1348:225"
-                      >
-                        {data.review}
-                      </Text>
-                    </View>
-                  </View>
-                  <View style={styles.frame121} testID="1348:226">
-                    <View style={styles.frame1172} testID="1348:227">
-                      <Text
-                        style={
-                          styles.ipfsQmZ4TDuvesekSs4QM5ZbKpXiZGun7S2CYtEzrb3DyXkjGx
-                        }
-                        testID="1348:228"
-                      >
-                        IPfS:{data.ipfsHash}
-                      </Text>
-                    </View>
+              <View style={styles.frame132} testID="1348:221">
+                <View style={styles.frame120} testID="1348:222">
+                  <View style={styles.frame117} testID="1348:223">
+                    <Text style={styles.posted} testID="1348:224">
+                      {`Posted!!!`}
+                    </Text>
+                    <Text
+                      style={
+                        styles.stephanieMarinkovicPostedANewRecipeWhiskeySour
+                      }
+                      testID="1348:225"
+                    >
+                      {data.review}
+                    </Text>
                   </View>
                 </View>
-                <View style={styles.frame118} testID="1348:229">
-                  <Text style={styles.now} testID="1348:230">
-                    {`now`}
-                  </Text>
-                  <View style={styles.frame131} testID="1348:231"></View>
+                <View style={styles.frame121} testID="1348:226">
+                  <View style={styles.frame1172} testID="1348:227">
+                    <Text
+                      style={
+                        styles.ipfsQmZ4TDuvesekSs4QM5ZbKpXiZGun7S2CYtEzrb3DyXkjGx
+                      }
+                      testID="1348:228"
+                    >
+                      IPfS:{data.ipfsHash}
+                    </Text>
+                  </View>
                 </View>
               </View>
+              <View style={styles.frame118} testID="1348:229">
+                <Text style={styles.now} testID="1348:230">
+                  {`now`}
+                </Text>
+                <View style={styles.frame131} testID="1348:231"></View>
+              </View>
+            </View>
             ))
           )}
 
@@ -135,40 +135,84 @@ const notification = () => {
                 <View style={styles.frame131} testID="1348:231"></View>
               </View>
             </View>
-            <View style={styles.frame133} testID="1349:242">
-              <View style={styles.frame1322} testID="1349:243">
-                <View style={styles.frame1202} testID="1349:244">
-                  <View style={styles.frame1173} testID="1349:245">
-                    <Text style={styles.booked} testID="1349:246">
+            <View style={styles.frame129} testID="1348:220">
+              <View style={styles.frame132} testID="1348:221">
+                <View style={styles.frame120} testID="1348:222">
+                  <View style={styles.frame117} testID="1348:223">
+                    <Text style={styles.posted} testID="1348:224">
                       {`Booked!!!`}
                     </Text>
                     <Text
                       style={
-                        styles.hash0X4A293A86Cba66C1C1971C350Af5C4A0C31Fa5Eda730Ec70660C5D4C5343D1271
+                        styles.stephanieMarinkovicPostedANewRecipeWhiskeySour
                       }
-                      testID="1349:247"
+                      testID="1348:225"
                     >
                       {`hash:0x4a293a86cba66c1c1971c350af5c4a0c31fa5eda730ec70660c5d4c5343d1271`}
                     </Text>
                   </View>
                 </View>
+              
               </View>
-              <View style={styles.frame1182} testID="1349:248">
-                <Text style={styles.now2} testID="1349:249">
+              <View style={styles.frame118} testID="1348:229">
+                <Text style={styles.now} testID="1348:230">
                   {`now`}
                 </Text>
-                <View style={styles.frame1312} testID="1349:250"></View>
+                <View style={styles.frame131} testID="1348:231"></View>
               </View>
             </View>
+           
+         
           </View>
+        
         </View>
-        <Button title="Reset Bookings" onPress={resetBookings} />
+        <TouchableOpacity style={styles.frame21}  onPress={resetBookings} >
+          <Text style={styles.bookNow} testID="1256:2244">
+            {`Clear`}
+          </Text>
+        </TouchableOpacity>
       </View>
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
+  bookNow: {
+    
+    flexGrow: 1,
+    flexShrink: 0,
+    flexBasis: 0,
+    color: "rgba(0, 0, 0, 1)",
+    textAlign: "center",
+    fontFamily: "Inter",
+    fontSize: 14.77,
+    fontStyle: "normal",
+    fontWeight: "600",
+  },
+  frame21: {
+    zIndex: 1,
+    position: "absolute",
+    top: 660,
+    
+   
+
+   
+    flexDirection: "row",
+    height: 61.19,
+    width:354,
+  
+    margin: 18,
+    justifyContent: "center",
+    alignItems: "center",
+    rowGap: 3.517,
+    columnGap: 3.517,
+    alignSelf: "stretch",
+    borderBottomLeftRadius: 63.652,
+    borderBottomRightRadius: 63.652,
+    borderTopLeftRadius: 63.652,
+    borderTopRightRadius: 63.652,
+    backgroundColor: "rgba(255, 255, 255, 1)",
+  },
   data: {
     paddingLeft: 22,
     paddingRight: 22,
@@ -427,9 +471,9 @@ const styles = StyleSheet.create({
 
   posted: {
     alignSelf: "stretch",
-    color: "rgba(255, 255, 255, 1)",
+    color: "rgb(255, 255, 255)",
     fontFamily: "Inter",
-    fontSize: 13.867,
+    fontSize: 16,
     fontStyle: "normal",
     fontWeight: "700",
     letterSpacing: 0.139,
@@ -437,9 +481,9 @@ const styles = StyleSheet.create({
   stephanieMarinkovicPostedANewRecipeWhiskeySour: {
     alignSelf: "stretch",
     width: 245,
-    color: "rgba(255, 255, 255, 0.501960813999176)",
+    color: "rgba(255, 255, 255, 0.8)",
     fontFamily: "Inter",
-    fontSize: 13.867,
+    fontSize: 14,
     fontStyle: "normal",
     fontWeight: "500",
     lineHeight: 18.72,
@@ -496,7 +540,7 @@ const styles = StyleSheet.create({
   frame117: {
     flexDirection: "column",
     alignItems: "flex-start",
-    rowGap: 4.16,
+    rowGap: 6.16,
     columnGap: 4.16,
     flexGrow: 1,
     flexShrink: 0,
@@ -504,9 +548,9 @@ const styles = StyleSheet.create({
   },
   ipfsQmZ4TDuvesekSs4QM5ZbKpXiZGun7S2CYtEzrb3DyXkjGx: {
     alignSelf: "stretch",
-    color: "rgba(255, 255, 255, 0.800000011920929)",
+    color: "rgba(255, 255, 255, 0.9)",
     fontFamily: "Inter",
-    fontSize: 11.787,
+    fontSize: 14,
     fontStyle: "normal",
     fontWeight: "500",
     lineHeight: 18.72,
@@ -533,7 +577,7 @@ const styles = StyleSheet.create({
     color: "rgba(255, 255, 255, 0.501960813999176)",
     textAlign: "right",
     fontFamily: "Inter",
-    fontSize: 12.48,
+    fontSize: 13.48,
     fontStyle: "normal",
     fontWeight: "500",
     lineHeight: 15.98,
@@ -542,14 +586,15 @@ const styles = StyleSheet.create({
   frame118: {
     width: 35.36,
     height: 58.987,
+    gap:6,
     flexDirection: "column",
     justifyContent: "space-between",
     alignItems: "center",
   },
   frame131: {
     flexDirection: "row",
-    width: 35.36,
-    height: 35.707,
+    width: 40.36,
+    height: 40.707,
     alignItems: "center",
     rowGap: 10,
     columnGap: 10,

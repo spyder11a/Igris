@@ -13,10 +13,12 @@ import {
 import React, { useState } from "react";
 import Svg, { Circle, Rect, Path } from "react-native-svg";
 import { useHotelBooking } from "../../../script/claimReward";
+import { useWalletStore } from "../../../components/walletStore";
 
 const profile = () => {
   const { claimInfluencerRewards, isConnected } = useHotelBooking();
   const [creditScore, setCreditScore] = useState("135"); // Simulating a stored credit score
+  const { address, chainId, walletProvider } = useWalletStore();
 
   const handleClaim = async () => {
     if (!isConnected) {
@@ -87,10 +89,10 @@ const profile = () => {
           <View style={styles.group33} testID="1270:91">
             <View style={styles.frame102} testID="1270:92">
               <Text style={styles.$0Xc5G4444} testID="1270:93">
-                {`0xc5g4....444`}
+             {`${address.slice(0, 10)}...${address.slice(-3)}`}
               </Text>
               <Text style={styles.kai06} testID="1270:94">
-                {`@kai_06`}
+                {`@greg_hisenberg`}
               </Text>
             </View>
           </View>

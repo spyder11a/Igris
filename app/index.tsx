@@ -55,17 +55,22 @@ const Onboarding = () => {
 useEffect(() => {
  
   
-  if (selected === 1) {
-    router.push("/home");
-  }
-  if (selected === 2) {
-    router.push("/user");
-  }
-  if (isConnected) {
+  if (selected === 1 && isConnected) {
+    console.log('home1')
     router.push("/home");
     return;
   }
-}, [isConnected ]);
+  if (selected === 2 && isConnected) {
+    console.log('Hotel')
+    router.push("/hotel");
+    return;
+  }
+  if (isConnected) {
+    console.log('home')
+    router.push("/home");
+    return;
+  }
+}, [isConnected]);
 
   return (
     <View style={styles.root}>
