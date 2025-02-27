@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserProvider, Contract } from "ethers";
 import { useAppKit, useAppKitAccount, useAppKitProvider } from "@reown/appkit-ethers-react-native";
-import SimpleHotelReviewABI from "./ContractJson/SimpleHotelReviewABI.json";
+import SimpleHotelReviewABI from "./ContractJson/HotelReviewABI.json";
 import { useWalletStore } from "@/components/walletStore";
 
 const CONTRACT_ADDRESS = "0x4000Be6d42338c50C194b2a71E7e9f3e61Fb35EA";
