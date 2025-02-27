@@ -67,7 +67,7 @@ useEffect(() => {
   }
   if (isConnected) {
     console.log('home')
-    router.push("/home");
+    router.replace("/home");
     return;
   }
 }, [isConnected]);

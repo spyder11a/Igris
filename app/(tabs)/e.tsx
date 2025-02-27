@@ -22,10 +22,14 @@ import * as ImagePicker from "expo-image-picker";
 import { Video } from "expo-av"; // Import Video from expo-av
 import axios from "axios";
 import { BookingContext } from "./context/BookingContext";
+import { getVideoThumbnail } from "react-native-video-thumbnail"; // Import thumbnail extractor
+
 
 const notification = () => {
   const { bookings } = useContext(BookingContext);
   const { resetBookings } = useContext(BookingContext);
+  
+  
 
   return (
     <ScrollView
@@ -91,7 +95,7 @@ const notification = () => {
                 <Text style={styles.now} testID="1348:230">
                   {`now`}
                 </Text>
-                <View style={styles.frame131} testID="1348:231"></View>
+                <Image  source={{uri:`https://ipfs.io/ipfs/${data.ipfsHash}`}}  style={styles.frame131} testID="1348:231"></Image>
               </View>
             </View>
             ))

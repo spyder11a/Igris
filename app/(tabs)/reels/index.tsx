@@ -207,7 +207,7 @@ const reels = () => {
               </Text>
             </View>
            
-            <TouchableOpacity onPress={() => router.push('./hotel')} style={styles.frame67} testID="1293:206">
+            <TouchableOpacity onPress={() => router.push('/reels/hotel')} style={styles.frame67} testID="1293:206">
               <Text style={styles.visitNow}  >
                 {`Visit Now`}
               </Text>

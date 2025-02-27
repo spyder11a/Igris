@@ -22,12 +22,17 @@ import { useNavigation } from "expo-router";
 const handelHotal = () => {
   Alert.alert("Error", "Both input fields are required");
 };
+
 const home = () => {
   const router = useRouter();
 
   //
 
   const [selected, setSelected] = useState(1);
+
+
+const handelHotal = () => {
+router.push("/home/hotel")};
 
   return (
     <ScrollView
