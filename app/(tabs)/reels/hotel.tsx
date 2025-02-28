@@ -156,58 +156,107 @@ export default function hotel() {
 
               ):(
                 <View style={styles.frame29} testID="1381:608">
-                <ImageBackground source={require("../../../assets/images/food1.png")} style={styles.frame32} testID="1381:609">
+                  <TouchableOpacity>
+                  <ImageBackground source={require("../../../assets/images/food7.png")} style={styles.frame32} testID="1381:609">
                   <View style={styles.group19} testID="1381:618">
                     <View style={styles.frame44} testID="1381:619">
-                      <ImageBackground  source={require("../../../assets/images/profile.png")}  style={styles.group81}  width={34.46} height={34.46}/>
+                      <ImageBackground  source={require("../../../assets/images/profile2.png")}  style={styles.group81}  width={34.46} height={34.46}/>
                       <Text style={styles.kai06} testID="1381:622">
-                        {`@kai_06`}
+                        {`@kavya_shah`}
                       </Text>
                       <Text style={styles.$0XAbdf56} testID="1381:623">
-                        {`0xABDF.........56`}
+                        {`0xa1b2c...1234`}
                       </Text>
                     </View>
                   </View>
                 </ImageBackground>
-                <ImageBackground source={require("../../../assets/images/food1.png")} style={styles.frame32} testID="1381:609">
+
+                </TouchableOpacity>
+                <TouchableOpacity>
+                <ImageBackground source={require("../../../assets/images/food2.png")} style={styles.frame32} testID="1381:609">
                   <View style={styles.group19} testID="1381:618">
                     <View style={styles.frame44} testID="1381:619">
-                      <ImageBackground  source={require("../../../assets/images/profile.png")}  style={styles.group81}  width={34.46} height={34.46}/>
+                      <ImageBackground  source={require("../../../assets/images/profile4.png")}  style={styles.group81}  width={34.46} height={34.46}/>
                       <Text style={styles.kai06} testID="1381:622">
-                        {`@kai_06`}
+                        {`@john_mark03`}
                       </Text>
                       <Text style={styles.$0XAbdf56} testID="1381:623">
-                        {`0xABDF.........56`}
+                        {`0x5d6e7...6789`}
                       </Text>
                     </View>
                   </View>
                 </ImageBackground>
-                <ImageBackground source={require("../../../assets/images/food1.png")} style={styles.frame32} testID="1381:609">
+
+                </TouchableOpacity>
+              
+                <TouchableOpacity>
+                <ImageBackground source={require("../../../assets/images/food4.png")} style={styles.frame32} testID="1381:609">
                   <View style={styles.group19} testID="1381:618">
                     <View style={styles.frame44} testID="1381:619">
-                      <ImageBackground  source={require("../../../assets/images/profile.png")}  style={styles.group81}  width={34.46} height={34.46}/>
+                      <ImageBackground  source={require("../../../assets/images/profile6.png")}  style={styles.group81}  width={34.46} height={34.46}/>
                       <Text style={styles.kai06} testID="1381:622">
-                        {`@kai_06`}
+                        {`@tiya_ken95`}
                       </Text>
                       <Text style={styles.$0XAbdf56} testID="1381:623">
-                        {`0xABDF.........56`}
+                        {`0x7b8c9...7890`}
                       </Text>
                     </View>
                   </View>
                 </ImageBackground>
-                <ImageBackground source={require("../../../assets/images/food1.png")} style={styles.frame32} testID="1381:609">
+
+                </TouchableOpacity>
+             
+                <TouchableOpacity>
+                <ImageBackground source={require("../../../assets/images/food5.png")} style={styles.frame32} testID="1381:609">
                   <View style={styles.group19} testID="1381:618">
                     <View style={styles.frame44} testID="1381:619">
-                      <ImageBackground  source={require("../../../assets/images/profile.png")}  style={styles.group81}  width={34.46} height={34.46}/>
+                      <ImageBackground  source={require("../../../assets/images/profile3.png")}  style={styles.group81}  width={34.46} height={34.46}/>
                       <Text style={styles.kai06} testID="1381:622">
-                        {`@kai_06`}
+                        {`@sem_go67`}
                       </Text>
                       <Text style={styles.$0XAbdf56} testID="1381:623">
-                        {`0xABDF.........56`}
+                        {`0x3c4d5...4566`}
                       </Text>
                     </View>
                   </View>
                 </ImageBackground>
+
+                </TouchableOpacity>
+                <TouchableOpacity>
+                <ImageBackground source={require("../../../assets/images/food6.png")} style={styles.frame32} testID="1381:609">
+                  <View style={styles.group19} testID="1381:618">
+                    <View style={styles.frame44} testID="1381:619">
+                      <ImageBackground  source={require("../../../assets/images/profile8.png")}  style={styles.group81}  width={34.46} height={34.46}/>
+                      <Text style={styles.kai06} testID="1381:622">
+                        {`@tony_stark04`}
+                      </Text>
+                      <Text style={styles.$0XAbdf56} testID="1381:623">
+                        {`0x9f8e7d...ef02`}
+                      </Text>
+                    </View>
+                  </View>
+                </ImageBackground>
+
+                </TouchableOpacity>
+            
+                <TouchableOpacity>
+                <ImageBackground source={require("../../../assets/images/food3.png")} style={styles.frame32} testID="1381:609">
+                  <View style={styles.group19} testID="1381:618">
+                    <View style={styles.frame44} testID="1381:619">
+                      <ImageBackground  source={require("../../../assets/images/profile1.png")}  style={styles.group81}  width={34.46} height={34.46}/>
+                      <Text style={styles.kai06} testID="1381:622">
+                        {`@david_hi`}
+                      </Text>
+                      <Text style={styles.$0XAbdf56} testID="1381:623">
+                        {`0x1a2b3c...ef01`}
+                      </Text>
+                    </View>
+                  </View>
+                </ImageBackground>
+                </TouchableOpacity>
+        
+               
+                
               </View>
 
               )

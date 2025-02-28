@@ -9,6 +9,7 @@ import {
   ScrollView,
   Platform,
   ImageBackground,
+  TouchableOpacity,
 } from "react-native";
 import React, { useState } from "react";
 import Svg, { Circle, Rect, Path } from "react-native-svg";
@@ -17,8 +18,10 @@ import { useWalletStore } from "../../../components/walletStore";
 
 const profile = () => {
   const { claimInfluencerRewards, isConnected } = useHotelBooking();
-  const [creditScore, setCreditScore] = useState("135"); // Simulating a stored credit score
+  const [creditScore, setCreditScore] = useState("90"); // Simulating a stored credit score
   const { address, chainId, walletProvider } = useWalletStore();
+  const [claim,setClaim] = useState(1)
+  const [tx,setTx] = useState('');
 
   const handleClaim = async () => {
     if (!isConnected) {
@@ -36,11 +39,14 @@ const profile = () => {
           "Success",
           `Rewards claimed successfully!\nTx Hash: ${txHash}`
         );
+        setTx(txHash)
         setCreditScore("0"); // Reset credit score after successful claim
+        setClaim(claim + 1);
       }
     } catch (error) {
       console.error("Error claiming rewards:", error);
     }
+   
   };
 
   //
@@ -78,7 +84,7 @@ const profile = () => {
               </View>
               <View style={styles.frame104} testID="1272:171">
                 <Text style={styles.$231} testID="1272:172">
-                  {`231`}
+                  {`4`}
                 </Text>
                 <Text style={styles.posts} testID="1272:173">
                   {`Posts`}
@@ -89,7 +95,7 @@ const profile = () => {
           <View style={styles.group33} testID="1270:91">
             <View style={styles.frame102} testID="1270:92">
               <Text style={styles.$0Xc5G4444} testID="1270:93">
-             {`${address.slice(0, 10)}...${address.slice(-3)}`}
+                {`${address.slice(0, 10)}...${address.slice(-3)}`}
               </Text>
               <Text style={styles.kai06} testID="1270:94">
                 {`@greg_hisenberg`}
@@ -130,30 +136,143 @@ const profile = () => {
 
           {selected == 1 ? (
             <View style={styles.frame29} testID="1270:104">
-              <View style={styles.frame32} testID="1270:105">
-                <Text style={styles.garlicBread} testID="1270:106">
-                  {`Garlic Bread`}
-                </Text>
-              </View>
-              <View style={styles.frame33} testID="1270:107">
-                <Text style={styles.garlicBread2} testID="1270:108">
-                  {`Garlic Bread`}
-                </Text>
-              </View>
-              <View style={styles.frame34} testID="1270:109">
-                <Text style={styles.garlicBread3} testID="1270:110">
-                  {`Garlic Bread`}
-                </Text>
-              </View>
-              <View style={styles.frame352} testID="1270:111">
-                <Text style={styles.garlicBread4} testID="1270:112">
-                  {`Garlic Bread`}
-                </Text>
-              </View>
+              <TouchableOpacity>
+                <ImageBackground
+                  source={require("../../../assets/images/food7.png")}
+                  style={styles.frame32}
+                  testID="1270:105"
+                >
+                  <Text style={styles.garlicBread} testID="1270:106">
+                    {`Olive Garden`}
+                  </Text>
+                </ImageBackground>
+              </TouchableOpacity>
+              <TouchableOpacity>
+                <ImageBackground
+                  source={require("../../../assets/images/food5.png")}
+                  style={styles.frame32}
+                  testID="1270:105"
+                >
+                  <Text style={styles.garlicBread} testID="1270:106">
+                    {`Urban Tandoor`}
+                  </Text>
+                </ImageBackground>
+              </TouchableOpacity>
+              <TouchableOpacity>
+                <ImageBackground
+                  source={require("../../../assets/images/food3.png")}
+                  style={styles.frame32}
+                  testID="1270:105"
+                >
+                  <Text style={styles.garlicBread} testID="1270:106">
+                    {`Aroma Bites`}
+                  </Text>
+                </ImageBackground>
+              </TouchableOpacity>
+              <TouchableOpacity>
+                <ImageBackground
+                  source={require("../../../assets/images/food4.png")}
+                  style={styles.frame32}
+                  testID="1270:105"
+                >
+                  <Text style={styles.garlicBread} testID="1270:106">
+                    {`Spice Avenue`}
+                  </Text>
+                </ImageBackground>
+              </TouchableOpacity>
             </View>
           ) : (
-           <>
-           </>
+            <>
+              {claim == 1 ? (
+                <TouchableOpacity onPress={handleClaim} style={styles._frame129} testID="1348:220">
+                <View style={styles.frame132} testID="1348:221">
+                  <View style={styles.frame120} testID="1348:222">
+                    <View style={styles._frame117} testID="1348:223">
+                      <Text style={styles.posted} testID="1348:224">
+                        {`Claim`}
+                      </Text>
+                    </View>
+                  </View>
+                </View>
+                <View style={styles.frame118} testID="1348:229">
+                </View>
+              </TouchableOpacity>
+              ):(
+                <View style={styles.__frame129} testID="1348:220">
+                <View style={styles.frame132} testID="1348:221">
+                  <View style={styles.frame120} testID="1348:222">
+                    <View style={styles.frame117} testID="1348:223">
+                      <Text style={styles.posted} testID="1348:224">
+                        {'Claimed'}
+                      </Text>
+                      <Text
+                        style={
+                          styles.stephanieMarinkovicPostedANewRecipeWhiskeySour
+                        }
+                        testID="1348:225"
+                      >
+                        hash:{tx}
+                      </Text>
+                    </View>
+                  </View>
+                </View>
+                <View style={styles.frame118} testID="1348:229">
+                  <Text style={styles.now} testID="1348:230">
+                    {`now`}
+                  </Text>
+                </View>
+              </View>
+              
+              )}
+              <View style={styles.frame129} testID="1348:220">
+                <View style={styles.frame132} testID="1348:221">
+                  <View style={styles.frame120} testID="1348:222">
+                    <View style={styles.frame117} testID="1348:223">
+                      <Text style={styles.posted} testID="1348:224">
+                      {'Claimed'}
+                      </Text>
+                      <Text
+                        style={
+                          styles.stephanieMarinkovicPostedANewRecipeWhiskeySour
+                        }
+                        testID="1348:225"
+                      >
+                        {`hash:0x52e253cea274d90eb9ac5af6ecdf64c45010e373def8ed56095f8e87372448fb`}
+                      </Text>
+                    </View>
+                  </View>
+                </View>
+                <View style={styles.frame118} testID="1348:229">
+                  <Text style={styles.now} testID="1348:230">
+                    {`10d`}
+                  </Text>
+                </View>
+              </View>
+              <View style={styles.frame129} testID="1348:220">
+                <View style={styles.frame132} testID="1348:221">
+                  <View style={styles.frame120} testID="1348:222">
+                    <View style={styles.frame117} testID="1348:223">
+                      <Text style={styles.posted} testID="1348:224">
+                      {'Claimed'}
+                      </Text>
+                      <Text
+                        style={
+                          styles.stephanieMarinkovicPostedANewRecipeWhiskeySour
+                        }
+                        testID="1348:225"
+                      >
+                        {`hash:0x4a293a86cba66c1c1971c350af5c4a0c31fa5eda730ec70660c5d4c5343d1271`}
+                      </Text>
+                    </View>
+                  </View>
+                </View>
+                <View style={styles.frame118} testID="1348:229">
+                  <Text style={styles.now} testID="1348:230">
+                    {`15d`}
+                  </Text>
+                </View>
+              </View>
+            </>
           )}
         </View>
       </View>
@@ -386,6 +505,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     rowGap: 3.467,
     columnGap: 3.467,
+    overflow: "hidden",
     borderBottomLeftRadius: 24.267,
     borderBottomRightRadius: 24.267,
     borderTopLeftRadius: 24.267,
@@ -469,6 +589,159 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 24.267,
     borderTopRightRadius: 24.267,
     backgroundColor: "rgba(49, 49, 49, 1)",
+  },
+
+  //
+ __frame129: {
+    flexDirection: "row",
+    marginTop: 20,
+    marginLeft: 18,
+    marginRight: 18,
+    paddingTop: 10.053,
+    paddingLeft: 10.747,
+    paddingBottom: 10.053,
+    paddingRight: 10.747,
+    justifyContent: "space-between",
+    alignItems: "flex-start",
+    alignSelf: "stretch",
+    borderBottomLeftRadius: 12.133,
+    borderBottomRightRadius: 12.133,
+    borderTopLeftRadius: 12.133,
+    borderTopRightRadius: 12.133,
+    backgroundColor: "rgba(24, 24, 24, 1)",
+    opacity: 0.4,
+  },
+  _frame129: {
+    flexDirection: "row",
+    marginTop: 20,
+    marginLeft: 18,
+    marginRight: 18,
+    paddingTop: 10.053,
+    paddingLeft: 10.747,
+    paddingBottom: 10.053,
+    paddingRight: 10.747,
+    justifyContent: "space-between",
+    alignItems: "flex-start",
+    alignSelf: "stretch",
+    borderBottomLeftRadius: 12.133,
+    borderBottomRightRadius: 12.133,
+    borderTopLeftRadius: 12.133,
+    borderTopRightRadius: 12.133,
+    backgroundColor: "rgba(24, 24, 24, 1)",
+  },
+  frame129: {
+    flexDirection: "row",
+    marginTop: 5,
+    marginLeft: 18,
+    marginRight: 18,
+    paddingTop: 10.053,
+    paddingLeft: 10.747,
+    paddingBottom: 10.053,
+    paddingRight: 10.747,
+    justifyContent: "space-between",
+    alignItems: "flex-start",
+    alignSelf: "stretch",
+    borderBottomLeftRadius: 12.133,
+    borderBottomRightRadius: 12.133,
+    borderTopLeftRadius: 12.133,
+    borderTopRightRadius: 12.133,
+    backgroundColor: "rgba(24, 24, 24, 1)",
+    opacity: 0.4,
+  },
+  frame132: {
+    flexDirection: "column",
+    alignItems: "flex-start",
+    rowGap: 15,
+    columnGap: 15,
+    flexGrow: 1,
+    flexShrink: 0,
+    flexBasis: 0,
+  },
+  frame120: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    alignSelf: "stretch",
+  },
+  _frame117: {
+    flexDirection: "column",
+    alignItems: "flex-start",
+    paddingTop:2,
+    paddingBottom:2,
+    rowGap: 6.16,
+    columnGap: 4.16,
+    flexGrow: 1,
+    flexShrink: 0,
+    flexBasis: 0,
+  },
+  frame117: {
+    flexDirection: "column",
+    alignItems: "flex-start",
+    rowGap: 6.16,
+    columnGap: 4.16,
+    flexGrow: 1,
+    flexShrink: 0,
+    flexBasis: 0,
+  },
+  ipfsQmZ4TDuvesekSs4QM5ZbKpXiZGun7S2CYtEzrb3DyXkjGx: {
+    alignSelf: "stretch",
+    color: "rgba(255, 255, 255, 0.9)",
+    fontFamily: "Inter",
+    fontSize: 14,
+    fontStyle: "normal",
+    fontWeight: "500",
+    lineHeight: 18.72,
+    letterSpacing: 0.177,
+  },
+  frame118: {
+    gap: 6,
+    flexDirection: "column",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  frame131: {
+    flexDirection: "row",
+    width: 40.36,
+    height: 40.707,
+    alignItems: "center",
+    rowGap: 10,
+    columnGap: 10,
+    flexShrink: 0,
+    borderBottomLeftRadius: 4.16,
+    borderBottomRightRadius: 4.16,
+    borderTopLeftRadius: 4.16,
+    borderTopRightRadius: 4.16,
+    backgroundColor: "rgba(43, 43, 43, 1)",
+  },
+  posted: {
+    alignSelf: "stretch",
+    color: "rgb(255, 255, 255)",
+    fontFamily: "Inter",
+    fontSize: 16,
+    fontStyle: "normal",
+    fontWeight: "700",
+    letterSpacing: 0.139,
+  },
+  stephanieMarinkovicPostedANewRecipeWhiskeySour: {
+    alignSelf: "stretch",
+    color: "rgba(255, 255, 255, 0.8)",
+    fontFamily: "Inter",
+    fontSize: 14,
+    fontStyle: "normal",
+    fontWeight: "500",
+    lineHeight: 18.72,
+    letterSpacing: 0.208,
+  },
+  now: {
+    alignSelf: "stretch",
+    color: "rgba(255, 255, 255, 0.501960813999176)",
+    textAlign: "right",
+    fontFamily: "Inter",
+    fontSize: 13.48,
+    fontStyle: "normal",
+    fontWeight: "500",
+    lineHeight: 15.98,
+    letterSpacing: 0.187,
   },
 });
 

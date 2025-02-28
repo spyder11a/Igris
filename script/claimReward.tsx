@@ -3,7 +3,7 @@ import { BrowserProvider, parseEther, Contract } from "ethers";
 import { useAppKit, useAppKitAccount, useAppKitProvider } from "@reown/appkit-ethers-react-native";
 import HotelBookingABI from "./ContractJson/HotelBookingABI.json";
 import { useWalletStore } from "@/components/walletStore";
-const CONTRACT_ADDRESS = "0x4AF2E4E96AC0EE8CcA3Ba251716710624D1eB554";
+const CONTRACT_ADDRESS = "0x665526Ee4d8E2191dcfE9299466dF9e68a342d93";
 
 export function useHotelBooking() {
     const { address, chainId, isConnected, walletProvider } = useWalletStore();
@@ -32,8 +32,7 @@ export function useHotelBooking() {
             console.error("🚫 Wallet not connected! Please connect first.");
             return;
         }
-
-        if (creditScore <= 0 || creditScore > 100) {
+        if (creditScore <= 0 ) {
             console.error("❌ Invalid credit score! Must be between 1 and 100.");
             return;
         }

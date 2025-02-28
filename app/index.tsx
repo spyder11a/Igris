@@ -75,7 +75,7 @@ useEffect(() => {
   return (
     <View style={styles.root}>
       <ImageBackground
-        source={require("../assets/images/a.png")}
+        source={require("../assets/images/onboard.png")}
         style={styles.rectangle9}
       >
         <View style={styles.onboarding} testID="1260:2286">
@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
   beAPartOfTheTransparentReviewRevolution: {
     height: 45.067,
     alignSelf: "stretch",
-    color: "rgba(255, 255, 255, 0.4000000059604645)",
+    color: "#757575",
     textAlign: "center",
     fontFamily: "Inter",
     fontSize: 18.375,

@@ -5,7 +5,6 @@ export default function ReelLayout() {
     <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen name="index" />
      
-      
     </Stack>
   );
 }
