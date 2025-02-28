@@ -4,7 +4,7 @@ import { useAppKit, useAppKitAccount, useAppKitProvider } from "@reown/appkit-et
 import SimpleHotelReviewABI from "./ContractJson/HotelReviewABI.json";
 import { useWalletStore } from "@/components/walletStore";
 
-const CONTRACT_ADDRESS = "0x4000Be6d42338c50C194b2a71E7e9f3e61Fb35EA";
+const CONTRACT_ADDRESS = "0x7CD4e073Fd118F2F1197c1C1aa450dd410ebDeEF";
 
 export function useHotelReview() {
   

@@ -158,18 +158,33 @@ router.push("/home/hotel")};
                           {`Roorkee`}
                         </Text>
                       </View>
-                      {/* <Image url={ellipse10} width={3.47} height={3.47}/> */}
+                      <View style={{
+                        height: 5,
+                        width:5,
+                        backgroundColor: 'rgba(255, 255, 255, 0.5)',
+                        borderRadius: 4,
+                      }} />
                       <View style={styles.group78} testID="1090:1001">
                         <Text style={styles.$35} testID="1090:1002">
                           {`3.5`}
                         </Text>
                         <View style={styles.frame74} testID="1090:1003">
-                          {/* <Vector2/> */}
+                          <Svg
+                                                     width="15"
+                                                     height="15"
+                                                     viewBox="0 0 15 15"
+                                                     fill="none"
+                                                   >
+                                                     <Path
+                                                       d="M7.43297 0.794189L9.58147 5.14803L14.3865 5.84617L10.9097 9.23515L11.7302 14.0205L7.43297 11.7612L3.13545 14.0205L3.95625 9.23515L0.479492 5.84617L5.28421 5.14803L7.43297 0.794189Z"
+                                                       fill="#FAC917"
+                                                     />
+                            </Svg>
                         </View>
                       </View>
                     </View>
                     <Text style={styles.painAuChocolat} testID="1090:1005">
-                      {`Pain au Chocolat`}
+                      {`Sun Dried Meat`}
                     </Text>
                   </View>
                 </Pressable>
@@ -756,6 +771,8 @@ const styles = StyleSheet.create({
   group78: {
     width: 41.231,
     height: 18,
+    flexDirection: "row",
+    gap: 2,
   },
   frame74: {
     paddingTop: 0.934,

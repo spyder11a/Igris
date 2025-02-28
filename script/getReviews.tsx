@@ -3,7 +3,7 @@ import { BrowserProvider, Contract } from "ethers";
 import { useAppKit, useAppKitAccount, useAppKitProvider } from "@reown/appkit-ethers-react-native";
 import SimpleHotelReviewABI from "./ContractJson/HotelReviewABI.json";
 import { useWalletStore } from "@/components/walletStore";
-const CONTRACT_ADDRESS = "0x4000Be6d42338c50C194b2a71E7e9f3e61Fb35EA";
+const CONTRACT_ADDRESS = "0x7CD4e073Fd118F2F1197c1C1aa450dd410ebDeEF";
 
 export function useHotelReview() {
   const { address, chainId, isConnected, walletProvider } = useWalletStore();
@@ -41,7 +41,7 @@ export function useHotelReview() {
   
       return reviews.map((review: any, index: number) => ({
         id: index, // Adding an ID to avoid keyExtractor errors in FlatList
-        hotelAddress: review.hotelAddress || "Unknown Hotel",
+        hotelAddress: review.hotel || "Unknown Hotel",
         reviewer: review.reviewer || "Unknown",
         reviewText: review.reviewText || "No review text",
         ipfsHash: review.ipfsHash || "No IPFS hash",

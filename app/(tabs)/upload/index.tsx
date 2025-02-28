@@ -185,14 +185,16 @@ const upload = () => {
   };
 
   if (hasPermission === null) {
+    console.log('camera')
     return (
       <SafeAreaView style={styles.container}>
-        <Text>Requesting camera permission...</Text>
+        <Text>Requesting camera permission...</Text> 
       </SafeAreaView>
     );
   }
 
   if (hasPermission === false) {
+   
     return (
       <SafeAreaView style={styles.container}>
         <Text>No access to camera</Text>
@@ -206,6 +208,8 @@ const upload = () => {
       </SafeAreaView>
     );
   }
+
+  console.log(hasPermission)
 
 
 
@@ -477,8 +481,6 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(217, 217, 217, 0.05098039284348488)",
   },
   root: {
-   
-   
     width: 390,
     height: 1150,
     paddingTop: 79.477,

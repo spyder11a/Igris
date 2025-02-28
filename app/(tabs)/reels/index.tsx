@@ -80,7 +80,7 @@ const reels = () => {
         videoUri: `https://ipfs.io/ipfs/${review.ipfsHash}`, // Assuming it's a video hash
         avatar: "./assets/avatar1.jpg",
         userName: "@user1",
-        address: "@user1",
+        address: review.reviewer,
         likes: 1234,
         rating: 4.5,
         description: review.reviewText || "No description",
@@ -136,15 +136,15 @@ const reels = () => {
         <View style={styles.group46} testID="1293:186">
           <View style={styles.frame113} testID="1293:187">
             <Image
-              source={require("../../../assets/images/profile.png")}
+              source={require("../../../assets/images/profile1.png")}
               style={styles.profile}
             />
             <View style={styles.frame112} testID="1293:191">
               <Text style={styles.chocolateChips} testID="1293:192">
-                {`Chocolate Chips`}
+                {`Richard Ells`}
               </Text>
               <Text style={styles.miltonAbel} testID="1293:193">
-                {`Milton Abel`}
+                  {`${reelsData[focusedIndex]?.address.slice(0, 14)}...${reelsData[focusedIndex]?.address.slice(-3)}`}
               </Text>
             </View>
           </View>
@@ -203,7 +203,7 @@ const reels = () => {
                 </Text>
               </View>
               <Text style={styles.painAuChocolat} testID="1293:205">
-                {`Pain au Chocolat`}
+                {`Sun Dried Meat`}
               </Text>
             </View>
            
@@ -432,7 +432,7 @@ const styles = StyleSheet.create({
   painAuChocolat: {
     width: 175.067,
     color: "rgba(255, 255, 255, 1)",
-    textAlign: "center",
+    textAlign: "start",
     fontFamily: "Inter",
     fontSize: 21.493,
     fontStyle: "normal",
@@ -457,6 +457,8 @@ const styles = StyleSheet.create({
   },
   steakTartareBecamePopularInThe19ThCenturyInNewYorkItWasOriginallyMadeWithHamburgSteakBecauseOfThe:
     {
+
+      height:60,
       flexGrow: 1,
       flexShrink: 0,
       flexBasis: 0,
