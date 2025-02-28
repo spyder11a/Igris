@@ -6,7 +6,7 @@ import { useWalletStore } from "../components/walletStore";
 import { Alert } from "react-native";
 
 // Replace with your deployed smart contract address
-const CONTRACT_ADDRESS = "0xc300D8ca0FfFb77496F1249fCC0A7C745AB3ad64";
+const CONTRACT_ADDRESS = "0x665526Ee4d8E2191dcfE9299466dF9e68a342d93";
 
 export function useHotelBooking() {
     const { address, chainId, isConnected, walletProvider } = useWalletStore();

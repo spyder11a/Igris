@@ -12,7 +12,8 @@ import {
 } from "react-native";
 import Svg, { Circle, Rect, Path } from "react-native-svg";
 import * as ImagePicker from "expo-image-picker";
-import { useHotelBooking } from "../script/subscribe";
+import { useHotelBooking } from "../../script/subscribe";
+import { useRouter } from "expo-router";
 
 export default function Hotel() {
   const [hotel, setHotel] = useState("");
@@ -45,6 +46,7 @@ export default function Hotel() {
   //
 
   const { subscribeToPlatform } = useHotelBooking();
+  const router = useRouter();  // Get router instance
 
   const handleSubscribe = async () => {
     if (!hotel || !location || !discription || !selectedImage) {
@@ -52,13 +54,20 @@ export default function Hotel() {
       console.log(location)
       console.log(discription)
       console.log(selectedImage)
-
-      
       Alert.alert("Error", "Please fill out all fields");
       return;
     }
-    subscribeToPlatform();
-    
+
+    try {
+      const tr = await subscribeToPlatform();  // Call the async function
+      router.replace("./booking");  // Navigate if successful
+  } catch (error) {
+      Alert.alert("Error", "Failed to subscribe to platform: " + error.message);
+  } finally {
+      console.log("Subscription attempt finished");  // Optional cleanup/logging
+  }
+  
+
   };
 
   return (
@@ -360,7 +369,7 @@ export default function Hotel() {
                         textAlign: "left",
                         zIndex: 15,
                       }}
-                      placeholder="Liters, grams, miligrams, etc"
+                      placeholder="ex.roorkee,uttrakhand,360579"
                       onChangeText={setLocation}
                       placeholderTextColor="" // Change placeholder color here
                       numberOfLines={1}
@@ -421,7 +430,7 @@ export default function Hotel() {
                         textAlign: "left",
                         zIndex: 15,
                       }}
-                      placeholder="Liters, grams, miligrams, etc"
+                      placeholder="discribe the hotel"
                       onChangeText={setDiscription}
                       placeholderTextColor="" // Change placeholder color here
                       numberOfLines={1}

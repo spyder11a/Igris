@@ -62,7 +62,7 @@ useEffect(() => {
   }
   if (selected === 2 && isConnected) {
     console.log('Hotel')
-    router.push("/hotel");
+    router.push("/(hotel)");
     return;
   }
   if (isConnected) {

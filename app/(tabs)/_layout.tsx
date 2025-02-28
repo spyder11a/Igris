@@ -141,6 +141,22 @@ export default function HomeLayout() {
             ),
           }}
         />
+         <Tabs.Screen
+          name="f"
+          options={{
+            tabBarIcon: ({ focused }) => (
+              <ImageBackground
+                source={require("../../assets/images/profile.png")}
+                style={{
+                  width: 26.088,
+                  height: 26.088,
+                  borderRadius: 22.088, // Fully rounded
+                  overflow: "hidden", // Ensures the image follows borderRadius
+                }}
+              />
+            ),
+          }}
+        />
       </Tabs>
     </BookingProvider>
   );
